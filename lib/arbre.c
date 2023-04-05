@@ -1,26 +1,6 @@
-#include <stdbool.h>
-#include <stdlib.h>
-#include <string.h>
 #include <ctype.h>
-
-struct noeud;
-struct liste_noeud;
-
-struct noeud {
-	bool est_dossier;
-	char nom[100];
-	struct noeud* pere;
-	struct noeud* racine;
-	struct liste_noeud *fils;
-};
-
-struct liste_noeud {
-	struct noeud* no;
-	struct liste_noeud* succ;
-};
-
-typedef struct noeud noeud;
-typedef struct liste_noeud liste_noeud;
+#include <string.h>
+#include "arbre.h"
 
 noeud* creer_arbre() {
 	noeud* racine = malloc(sizeof(noeud));
