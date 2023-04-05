@@ -3,6 +3,8 @@
 
 #include "arbre.h"
 
+struct liste_noeud;
+
 struct liste_noeud {
 	struct noeud* no;
 	struct liste_noeud* succ;
@@ -10,5 +12,4 @@ struct liste_noeud {
 
 typedef struct liste_noeud liste_noeud;
 
-extern void ajouter_noeud(noeud*);
 #endif

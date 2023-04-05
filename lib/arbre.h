@@ -2,6 +2,9 @@
 #define ARBRE_H
 
 #include <stdbool.h>
+#include "liste.h"
+
+struct noeud;
 
 struct noeud {
 	bool est_dossier;
@@ -15,6 +18,6 @@ typedef struct noeud noeud;
 
 extern noeud* creer_arbre();
 extern noeud* creer_fichier(noeud* , char [100]);
-extern noeud* creer_dossier(noeud* , char [100]);
+extern noeud* creer_dossier(noeud* , char [100], liste_noeud*);
 extern bool est_nom_valide(char [100]);
 #endif

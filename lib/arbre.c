@@ -1,6 +1,9 @@
 #include <ctype.h>
+#include <stdlib.h>
 #include <string.h>
+
 #include "arbre.h"
+#include "liste.h"
 
 noeud* creer_arbre() {
 	noeud* racine = malloc(sizeof(noeud));
