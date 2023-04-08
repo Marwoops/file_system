@@ -5,27 +5,26 @@
 #include "instruction.h"
 
 instruction* generer_instruction(char* input) {
-	char* input_copy = NULL;
-	strcpy(input_copy, input);
-
 	instruction* instr = malloc(sizeof(instruction));
 	if (instr == NULL) {
+		puts("probleme malloc lors de la génération d'une instruction");
 		exit(1);
 	}
 
-	instr->cmd = get_commande(strtok(input_copy, " "));
+	instr->cmd = get_commande(strtok(input, " "));
 
 	if (instr->cmd == INVALIDE) {
 		puts("Commande non-reconnue");
 		exit(1);
 	}
 
-	instr->arg1 = strtok(input_copy, " ");
-	instr->arg2 = strtok(input_copy, " ");
+	instr->arg1 = strtok(NULL, " ");
+	instr->arg2 = strtok(NULL, " ");
 
 	instr->nombre_arguments = (instr->arg1 != NULL) + (instr->arg2 != NULL);
 
-	if (input_copy != NULL) {
+	if (strtok(NULL, " ") != NULL) {
+		printf("%s\n", input);
 		puts("Trop d'arguments.");
 		exit(1);
 	}
@@ -46,3 +45,23 @@ commande get_commande(char* input) {
 	return INVALIDE;
 }
 
+void afficher_instruction(instruction* instr) {
+	puts("instruction :");
+	printf("cmd: %d\n", instr->cmd);
+	printf("nombre_arguments: %u\n", instr->nombre_arguments);
+	if (instr->arg1 != NULL) printf("arg1 : %s\n", instr->arg1);
+	if (instr->arg2 != NULL) printf("arg2 : %s\n", instr->arg2);
+	puts("");
+	/* switch(instr->cmd) { */
+	/* 	case LS: puts("ls"); break; */
+	/* 	case CD: puts("cd"); break; */
+	/* 	case PWD: puts("pwd"); break; */
+	/* 	case MKDIR: puts("mkdir"); break; */
+	/* 	case TOUCH: puts("touch"); break; */
+	/* 	case RM: puts("rm"); break; */
+	/* 	case CP: puts("cp"); break; */
+	/* 	case MV: puts("mv"); break; */
+	/* 	case PRINT: puts("print"); break; */
+	/* 	default: puts("INVALIDE"); */
+	/* } */
+}

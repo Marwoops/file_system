@@ -19,6 +19,7 @@ typedef struct instruction instruction;
 
 extern instruction* generer_instruction(char*);
 extern commande get_commande(char *);
+extern void afficher_instruction();
 extern char** get_chemin(char*);
 
 extern void ls(noeud*, instruction*);
