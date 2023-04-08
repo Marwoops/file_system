@@ -15,6 +15,7 @@ struct noeud {
 };
 
 typedef struct noeud noeud;
+typedef struct liste_noeud liste_noeud;
 
 extern noeud* creer_arbre();
 extern noeud* creer_fichier(noeud* , char [100]);
