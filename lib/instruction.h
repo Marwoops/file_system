@@ -5,7 +5,7 @@
 
 struct instruction;
 
-enum commande {LS, CD, PWD, MKDIR, TOUCH, RM, CP, MV, PRINT};
+enum commande {LS, CD, PWD, MKDIR, TOUCH, RM, CP, MV, PRINT, INVALIDE};
 typedef enum commande commande;
 
 struct instruction {
@@ -18,6 +18,7 @@ struct instruction {
 typedef struct instruction instruction;
 
 extern instruction* generer_instruction(char*);
+extern commande get_commande(char *);
 extern char** get_chemin(char*);
 
 extern void ls(noeud*, instruction*);
