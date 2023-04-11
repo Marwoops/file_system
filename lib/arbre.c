@@ -1,6 +1,7 @@
 #include <ctype.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
 
 #include "arbre.h"
 #include "liste.h"
@@ -15,7 +16,8 @@ noeud* creer_arbre() {
 	char n[100] = {'\0'};
 	racine->est_dossier = true;
 	racine->racine = racine;
-	memcpy(racine->nom, n, sizeof	(n));
+	racine->fils=creer_liste();
+	memcpy(racine->nom, n, sizeof(n));
 
 	return racine;
 }
@@ -57,3 +59,4 @@ bool est_nom_valide(char nom[100]) {
 	}
 	return true;
 }
+

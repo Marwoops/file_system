@@ -10,9 +10,23 @@ int main(void) {
 	char exp2[] = "cd proj";
 	char exp3[] = "rm proj proj";
 
-	/* printf("%d\n", get_commande(exp1)); */
-	/* instruction* instr1 = generer_instruction(exp1); */
-	/* afficher_instruction(instr1); */
+	noeud *n=creer_arbre();
+	liste_noeud *liste1=creer_liste();
+	noeud *fils1=creer_fichier(n,"prout"); 
+	noeud *fils2=creer_fichier(n,"crampte"); 
+	noeud *fils3=creer_dossier(n,"stylo", liste1); 
+
+	ajouter_elt(n->fils, fils1);
+	ajouter_elt(n->fils, fils2);
+	ajouter_elt(n->fils, fils3);
+	
+	instruction *i=generer_instruction("ls");
+
+	ls(n,i);
+
+	printf("%d\n", get_commande(exp1)); 
+	instruction* instr1 = generer_instruction(exp1); 
+	afficher_instruction(instr1);
 
 	printf("%d\n", get_commande(exp2));
 	instruction* instr2 = generer_instruction(exp2);

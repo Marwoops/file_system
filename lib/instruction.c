@@ -65,3 +65,12 @@ void afficher_instruction(instruction* instr) {
 	/* 	default: puts("INVALIDE"); */
 	/* } */
 }
+
+void ls (noeud *n, instruction *i)
+{
+	if(i->nombre_arguments>0)
+	{
+		exit(1);
+	}
+	affiche_liste(n->fils);
+}
