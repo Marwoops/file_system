@@ -15,7 +15,7 @@ noeud* creer_arbre() {
 	char n[100] = {'\0'};
 	racine->est_dossier = true;
 	racine->racine = racine;
-	memcpy(racine->nom, n, sizeof(n));
+	memcpy(racine->nom, n, sizeof	(n));
 
 	return racine;
 }
