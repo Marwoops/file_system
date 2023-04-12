@@ -70,7 +70,46 @@ void ls (noeud *n, instruction *i)
 {
 	if(i->nombre_arguments>0)
 	{
+		printf("ls n'attend aucun argument.");
 		exit(1);
 	}
 	affiche_liste(n->fils);
+}
+
+/*void pwd (noeud *n, instruction *i)
+{
+	if(i->nombre_arguments>0)
+	{
+		exit(1);
+	}
+	if(n->racine==n){
+		printf("%s/\n", n->nom);
+	}
+	pwd(n->pere, i);
+	printf("%s/\n", n->nom);
+}*/
+
+void touch(noeud *n, instruction *i)
+{
+	if (i->nombre_arguments!=1)
+	{
+		printf("touch attend exactement un fichier en argument.");
+		exit(1);
+	}
+	noeud *fichier= creer_fichier(n->racine, i->arg1);
+	fichier->pere=n;	
+	ajouter_elt(n->fils, fichier);
+}
+
+void mkdir(noeud *n, instruction *i)
+{
+	if (i->nombre_arguments!=1)
+	{
+		printf("mkdir attend exactement un fichier en argument.");
+		exit(1);
+	}
+	liste_noeud *l=creer_liste();
+	noeud *dossier= creer_dossier(n->racine, i->arg1, l);
+	dossier->pere=n;	
+	ajouter_elt(n->fils, dossier);
 }
