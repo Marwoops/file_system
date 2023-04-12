@@ -76,19 +76,6 @@ void ls (noeud *n, instruction *i)
 	affiche_liste(n->fils);
 }
 
-/*void pwd (noeud *n, instruction *i)
-{
-	if(i->nombre_arguments>0)
-	{
-		exit(1);
-	}
-	if(n->racine==n){
-		printf("%s/\n", n->nom);
-	}
-	pwd(n->pere, i);
-	printf("%s/\n", n->nom);
-}*/
-
 void touch(noeud *n, instruction *i)
 {
 	if (i->nombre_arguments!=1)

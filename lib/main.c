@@ -9,6 +9,7 @@ int main(void) {
 	char exp1[] = "ls";
 	char exp2[] = "cd proj";
 	char exp3[] = "rm proj proj";
+	char exp4[]= "pwd";
 
 	char crampte[]="touch crampte";
 	char prout[]="touch prout";
@@ -23,7 +24,6 @@ int main(void) {
 	instruction *t2=generer_instruction(crampte);
 	instruction *m1=generer_instruction(stylo);
 	instruction *m2=generer_instruction(bic);
-	//instruction *i1=generer_instruction("pwd");
 
 	touch(n,t1); 
 	touch(n,t2); 
@@ -31,8 +31,7 @@ int main(void) {
 	mkdir(n,m1);
 	ls(n,i);
 	mkdir(get_elt(n->fils, "stylo"), m2);
-	ls(get_elt(n->fils, "stylo"), i)
-;	//pwd(fils3,i1);
+	ls(get_elt(n->fils, "stylo"), i);
 
 	printf("%d\n", get_commande(exp1)); 
 	instruction* instr1 = generer_instruction(exp1); 
