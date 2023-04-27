@@ -1,0 +1,2 @@
+ls
+cp r/hello r/palu
