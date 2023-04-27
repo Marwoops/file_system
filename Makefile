@@ -1,15 +1,12 @@
 CC=gcc
 CFLAGS=-Wall
 DEPS=lib/arbre.h lib/liste.h lib/instruction.h lib/debug.h
-TEST=main
 EXEC=treedir
 
-all : build run clean
+all : build
+	./$(EXEC) tests/base.txt --debug
 
-build : ${TEST} ${EXEC}
-
-run :
-	./${TEST}
+build : ${EXEC}
 
 clean :
 	rm -rf $(EXEC) *.o main treedir log

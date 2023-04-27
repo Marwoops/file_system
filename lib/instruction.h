@@ -2,7 +2,9 @@
 #define INSTRUCTION_H
 
 #include <stdio.h>
+
 #include "arbre.h"
+#include "debug.h"
 
 struct instruction;
 

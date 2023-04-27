@@ -19,7 +19,7 @@ int main(int argc, char* argv[]) {
 		exit(1);
 	}
 
-	flog("ouverture du fichier instruction\n");
+	flog("ouverture du fichier instruction");
 	FILE* fichier_instructions = fopen(argv[1], "r");
 
 	if (fichier_instructions == NULL) {
@@ -35,9 +35,7 @@ int main(int argc, char* argv[]) {
 	int numero_ligne = 0;
 
 	while ((getline(&ligne, &t, fichier_instructions)) != -1) {
-		flog("lecture de l'instruction ligne %d\n", numero_ligne);
-		getline(&ligne, &t, fichier_instructions);
-		generer_instruction(ligne);
+		flogf("lecture de l'instruction ligne %d\n", numero_ligne);
 		instr = generer_instruction(ligne);
 		arbre = traiter_instruction(arbre, instr);
 		numero_ligne++;
