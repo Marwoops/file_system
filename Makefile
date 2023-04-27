@@ -1,6 +1,6 @@
 CC=gcc
 CFLAGS=-Wall
-DEPS=lib/arbre.h lib/liste.h lib/instruction.h
+DEPS=lib/arbre.h lib/liste.h lib/instruction.h lib/debug.h
 TEST=main
 EXEC=treedir
 
@@ -17,8 +17,8 @@ clean :
 %.o: lib/%.c $(DEPS)
 	$(CC) $(CFLAGS) -c $<
 
-main : main.o arbre.o liste.o instruction.o
+main : main.o arbre.o liste.o instruction.o debug.o
 	$(CC) $(CFLAGS) -o $@ $^
 
-treedir : treedir.o arbre.o liste.o instruction.o
+treedir : treedir.o arbre.o liste.o instruction.o debug.o
 	$(CC) $(CFLAGS) -o $@ $^
