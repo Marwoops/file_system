@@ -1,7 +1,6 @@
 #include <ctype.h>
 #include <stdlib.h>
 #include <string.h>
-#include <stdio.h>
 
 #include "arbre.h"
 #include "liste.h"
@@ -33,9 +32,9 @@ liste_noeud *creer_liste_avec_noeud(noeud* n)
 }
 
 
-noeud *get_elt(liste_noeud* l, char *mot) 
+noeud *get_elt(liste_noeud* l, char nom[100])
 {
-    if(strcmp(mot,l->no->nom)==0)
+    if(strcmp(nom,l->no->nom)==0)
     {
         return l->no;
     }
@@ -43,7 +42,7 @@ noeud *get_elt(liste_noeud* l, char *mot)
     {
         return NULL;
     }
-    return get_elt(l->succ, mot);
+    return get_elt(l->succ, nom);
 }
 
 noeud *ajouter_elt (liste_noeud* l, noeud* n)

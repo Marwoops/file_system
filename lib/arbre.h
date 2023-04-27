@@ -1,8 +1,8 @@
 #ifndef ARBRE_H
 #define ARBRE_H
 
+#include <stdio.h>
 #include <stdbool.h>
-#include "liste.h"
 
 struct noeud;
 

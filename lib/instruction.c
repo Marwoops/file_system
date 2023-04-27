@@ -1,8 +1,11 @@
+#include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include <string.h>
 
 #include "instruction.h"
+#include "liste.h"
 
 instruction* generer_instruction(char* input) {
 	instruction* instr = malloc(sizeof(instruction));
@@ -11,7 +14,7 @@ instruction* generer_instruction(char* input) {
 		exit(1);
 	}
 
-	instr->cmd = get_commande(strtok(input, " "));
+	instr->cmd = get_commande(strtok(input, " \n"));
 
 	if (instr->cmd == INVALIDE) {
 		puts("Commande non-reconnue");
@@ -30,6 +33,22 @@ instruction* generer_instruction(char* input) {
 	}
 
 	return instr;
+}
+
+noeud* traiter_instruction(noeud* n, instruction* instr) {
+	assert(instr != NULL);
+	switch (instr->cmd) {
+		case LS: return ls(n, instr);
+		case CD: return cd(n, instr);
+		case PWD: return pwd(n, instr);
+		case MKDIR: return mkdir(n, instr);
+		case TOUCH: return touch(n, instr);
+		case RM: return rm(n, instr);
+		case CP: return cp(n, instr);
+		case MV: return mv(n, instr);
+		case PRINT: return print(n, instr);
+		default: return n;
+	}
 }
 
 commande get_commande(char* input) {
@@ -66,7 +85,7 @@ void afficher_instruction(instruction* instr) {
 	/* } */
 }
 
-void ls (noeud *n, instruction *i)
+noeud* ls (noeud *n, instruction *i)
 {
 	if(i->nombre_arguments>0)
 	{
@@ -74,21 +93,18 @@ void ls (noeud *n, instruction *i)
 		exit(1);
 	}
 	affiche_liste(n->fils);
+	return n;
 }
 
-void touch(noeud *n, instruction *i)
-{
-	if (i->nombre_arguments!=1)
-	{
-		printf("touch attend exactement un fichier en argument.");
-		exit(1);
-	}
-	noeud *fichier= creer_fichier(n->racine, i->arg1);
-	fichier->pere=n;	
-	ajouter_elt(n->fils, fichier);
+noeud* cd (noeud *n, instruction *i) {
+	return n;
 }
 
-void mkdir(noeud *n, instruction *i)
+noeud* pwd (noeud *n, instruction *i) {
+	return n;
+}
+
+noeud* mkdir(noeud *n, instruction *i)
 {
 	if (i->nombre_arguments!=1)
 	{
@@ -99,4 +115,34 @@ void mkdir(noeud *n, instruction *i)
 	noeud *dossier= creer_dossier(n->racine, i->arg1, l);
 	dossier->pere=n;	
 	ajouter_elt(n->fils, dossier);
+	return n;
+}
+
+noeud* touch(noeud *n, instruction *i)
+{
+	if (i->nombre_arguments!=1)
+	{
+		printf("touch attend exactement un fichier en argument.");
+		exit(1);
+	}
+	noeud *fichier= creer_fichier(n->racine, i->arg1);
+	fichier->pere=n;
+	ajouter_elt(n->fils, fichier);
+	return n;
+}
+
+noeud* rm(noeud *n, instruction *i) {
+	return n;
+}
+
+noeud* cp(noeud *n, instruction *i) {
+	return n;
+}
+
+noeud* mv(noeud *n, instruction *i) {
+	return n;
+}
+
+noeud* print(noeud *n, instruction *i) {
+	return n;
 }

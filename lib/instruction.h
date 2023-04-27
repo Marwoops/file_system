@@ -1,6 +1,7 @@
 #ifndef INSTRUCTION_H
 #define INSTRUCTION_H
 
+#include <stdio.h>
 #include "arbre.h"
 
 struct instruction;
@@ -18,18 +19,19 @@ struct instruction {
 typedef struct instruction instruction;
 
 extern instruction* generer_instruction(char*);
+extern noeud* traiter_instruction(noeud*, instruction*);
 extern commande get_commande(char *);
-extern void afficher_instruction();
+extern void afficher_instruction(instruction*);
 extern char** get_chemin(char*);
 
-extern void ls(noeud*, instruction*);
+extern noeud* ls(noeud*, instruction*);
 extern noeud* cd(noeud*, instruction*);
-extern void pwd(noeud*, instruction*);
-extern void mkdir(noeud*, instruction*);
-extern void touch(noeud*, instruction*);
-extern void rm(noeud*, instruction*);
-extern void cp(noeud*, instruction*);
-extern void mv(noeud*, instruction*);
-extern void print(noeud*, instruction*);
+extern noeud* pwd(noeud*, instruction*);
+extern noeud* mkdir(noeud*, instruction*);
+extern noeud* touch(noeud*, instruction*);
+extern noeud* rm(noeud*, instruction*);
+extern noeud* cp(noeud*, instruction*);
+extern noeud* mv(noeud*, instruction*);
+extern noeud* print(noeud*, instruction*);
 
 #endif
