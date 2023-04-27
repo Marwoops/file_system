@@ -5,7 +5,7 @@
 #include "liste.h"
 #include "instruction.h"
 
-int main(void) {
+int main(int argc, char* argv[]) {
 	char exp1[] = "ls";
 	char exp2[] = "cd proj";
 	char exp3[] = "rm proj proj";
