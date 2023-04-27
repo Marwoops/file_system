@@ -1,20 +1,24 @@
 CC=gcc
 CFLAGS=-Wall
 DEPS=lib/arbre.h lib/liste.h lib/instruction.h
-EXEC=main
+TEST=main
+EXEC=treedir
 
 all : build run clean
 
-build : ${EXEC}
+build : ${TEST} ${EXEC}
 
 run :
-	./${EXEC}
+	./${TEST}
 
 clean :
-	rm -rf $(EXEC) *.o
+	rm -rf $(EXEC) *.o main treedir log
 
 %.o: lib/%.c $(DEPS)
 	$(CC) $(CFLAGS) -c $<
 
 main : main.o arbre.o liste.o instruction.o
+	$(CC) $(CFLAGS) -o $@ $^
+
+treedir : treedir.o arbre.o liste.o instruction.o
 	$(CC) $(CFLAGS) -o $@ $^
