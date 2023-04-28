@@ -4,13 +4,14 @@
 
 #include "arbre.h"
 #include "liste.h"
+#include "exit.h"
+#include "debug.h"
 
 noeud* creer_arbre() {
+	flog("initialisation de l'arbre");
 	noeud* racine = malloc(sizeof(noeud));
 
-	if (racine == NULL) {
-		return NULL;
-	}
+	if (racine == NULL) exit_malloc();
 
 	char n[100] = {'\0'};
 	racine->est_dossier = true;
@@ -22,11 +23,11 @@ noeud* creer_arbre() {
 }
 
 noeud* creer_fichier(noeud* racine, char nom[100]) {
+	flogf("création du fichier %s\n", nom);
+
 	noeud* fichier = malloc(sizeof(noeud));
 
-	if (fichier == NULL) {
-		return NULL;
-	}
+	if (fichier == NULL) exit_malloc();
 
 	fichier->est_dossier = false;
 	fichier->racine = racine;
@@ -36,11 +37,11 @@ noeud* creer_fichier(noeud* racine, char nom[100]) {
 }
 
 noeud* creer_dossier(noeud* racine, char nom[100], liste_noeud* fils) {
+	flogf("création du dossier %s\n", nom);
+
 	noeud* dossier = malloc(sizeof(noeud));
 
-	if (dossier == NULL) {
-		return NULL;
-	}
+	if (dossier == NULL) exit_malloc();
 
 	dossier->est_dossier = true;
 	dossier->racine = racine;

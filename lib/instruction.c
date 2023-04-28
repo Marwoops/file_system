@@ -6,15 +6,13 @@
 
 #include "instruction.h"
 #include "liste.h"
+#include "exit.h"
 
 instruction *generer_instruction(char *input) {
 	flog("génération de l'instruction");
 
 	instruction *instr = malloc(sizeof(instruction));
-	if (instr == NULL) {
-		puts("probleme malloc lors de la génération d'une instruction");
-		exit(1);
-	}
+	if (instr == NULL) exit_malloc();
 
 	instr->cmd = get_commande(strtok(input, " \n"));
 
@@ -28,12 +26,7 @@ instruction *generer_instruction(char *input) {
 
 	instr->nombre_arguments = (instr->arg1 != NULL) + (instr->arg2 != NULL);
 
-	if (strtok(NULL, " ") != NULL) {
-		printf("%s\n", input);
-		puts("Trop d'arguments.");
-		exit(1);
-	}
-
+	if (strtok(NULL, " ") != NULL) exit_trop_d_arguments();
 	return instr;
 }
 
