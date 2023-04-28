@@ -1,2 +1,4 @@
 ls
+touch cramptos
+ls
 cp r/hello r/palu

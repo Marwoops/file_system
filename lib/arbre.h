@@ -26,5 +26,4 @@ extern void supprimer_noeud(noeud*, noeud*);
 extern void supprimer_noeud_par_nom(noeud*, char[100]);
 
 extern bool est_dossier(noeud*);
-extern bool est_nom_valide(char [100]);
 #endif

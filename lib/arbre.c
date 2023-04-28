@@ -1,4 +1,3 @@
-#include <ctype.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -50,13 +49,3 @@ noeud* creer_dossier(noeud* racine, char nom[100], liste_noeud* fils) {
 
 	return dossier;
 }
-
-bool est_nom_valide(char nom[100]) {
-	for (size_t t = 0; t < 100; ++t) {
-		if (!isalnum(nom[t])) {
-			return false;
-		}
-	}
-	return true;
-}
-
