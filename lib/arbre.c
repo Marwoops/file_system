@@ -1,3 +1,4 @@
+#include <assert.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -5,6 +6,16 @@
 #include "liste.h"
 #include "exit.h"
 #include "debug.h"
+
+chemin *generer_chemin(bool est_absolu, size_t profondeur, char** noeuds) {
+	chemin *chem = malloc(sizeof(chemin));
+	if (chem == NULL) exit_malloc();
+
+	chem->est_absolu = est_absolu;
+	chem->profondeur = profondeur;
+	chem->noeuds = noeuds;
+	return chem;
+}
 
 noeud* creer_arbre() {
 	flog("initialisation de l'arbre");
@@ -48,4 +59,8 @@ noeud* creer_dossier(noeud* racine, char nom[100], liste_noeud* fils) {
 	memcpy(dossier->nom, nom, sizeof(char)*100);
 
 	return dossier;
+}
+
+noeud *ajouter_noeud(noeud *racine, chemin* chem, noeud *noeud) {
+	return racine;
 }

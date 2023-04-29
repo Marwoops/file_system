@@ -4,8 +4,6 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-struct noeud;
-
 struct noeud {
 	bool est_dossier;
 	char nom[100];
@@ -14,16 +12,24 @@ struct noeud {
 	struct liste_noeud *fils;
 };
 
+struct chemin {
+	bool est_absolu;
+	size_t profondeur;
+	char** noeuds;
+};
+
 typedef struct noeud noeud;
 typedef struct liste_noeud liste_noeud;
+typedef struct chemin chemin;
 
-extern noeud* creer_arbre();
-extern noeud* creer_fichier(noeud* , char [100]);
-extern noeud* creer_dossier(noeud* , char [100], liste_noeud*);
+extern chemin *generer_chemin(bool, size_t, char**);
+extern noeud *creer_arbre();
+extern noeud *creer_fichier(noeud* , char [100]);
+extern noeud *creer_dossier(noeud* , char [100], liste_noeud*);
 
-extern noeud* ajouter_noeud(noeud*, noeud*);
-extern void supprimer_noeud(noeud*, noeud*);
-extern void supprimer_noeud_par_nom(noeud*, char[100]);
+extern noeud *ajouter_noeud(noeud*, chemin*, noeud*);
+extern void supprimer_noeud(noeud*, chemin*, noeud*);
+extern void supprimer_noeud_par_nom(noeud*, chemin*, char[100]);
 
 extern bool est_dossier(noeud*);
 #endif

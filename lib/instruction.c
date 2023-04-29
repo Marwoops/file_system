@@ -81,7 +81,7 @@ void afficher_instruction(instruction *instr) {
 	} */
 }
 
-char** get_chemin(char *chemin, bool *est_absolu, size_t *taille) {
+char** decoupe_chemin(char *chemin, bool *est_absolu, size_t *taille) {
 	assert(chemin != NULL);
 	assert(*chemin != '\0');
 
@@ -116,6 +116,7 @@ char** get_chemin(char *chemin, bool *est_absolu, size_t *taille) {
 	char **chemin_decoupe = malloc(nb_noeuds * sizeof(char*));
 	*chemin_decoupe = malloc(plus_long_noeud * sizeof(char));
 	strcpy(*chemin_decoupe, strtok(chemin, "/"));
+
 	for (size_t i = 1; i < nb_noeuds; ++i) {
 		*(chemin_decoupe+i) = malloc(plus_long_noeud * sizeof(char));
 		strcpy(*(chemin_decoupe+i), strtok(NULL, "/"));
@@ -136,9 +137,9 @@ bool est_nom_valide(char *input) {
 	return true;
 }
 
-noeud *ls (noeud *n, instruction *instr)
-{
+noeud *ls (noeud *n, instruction *instr) {
 	if(instr->nombre_arguments>0) {
+		// Message d'erreur à fix
 		printf("ls n'attend aucun argument.");
 		exit(1);
 	}
