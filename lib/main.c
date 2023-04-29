@@ -6,7 +6,7 @@
 #include "instruction.h"
 
 int main(int argc, char* argv[]) {
-	char exp1[] = "ls";
+	/*char exp1[] = "ls";
 	char exp2[] = "cd proj";
 	char exp3[] = "rm proj proj";
 	char exp4[]= "pwd";
@@ -44,6 +44,16 @@ int main(int argc, char* argv[]) {
 	printf("%d\n", get_commande(exp3));
 	instruction* instr3 = generer_instruction(exp3);
 	afficher_instruction(instr3);
+	*/
+
+	size_t n = 0;
+	bool est_abs = false;
+	char test[] = "/alo/merci/au/revoir";
+	char **decoupe = get_chemin(test, &est_abs, &n);
+
+	for (size_t i = 0; i < n; ++i) {
+		printf("%s\n", *(decoupe+i));
+	}
 
 	return EXIT_SUCCESS;
 }

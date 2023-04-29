@@ -113,9 +113,11 @@ char** get_chemin(char *chemin, bool *est_absolu, size_t *taille) {
 	plus_long_noeud = (longueur_actuelle > plus_long_noeud) ?
 		longueur_actuelle : plus_long_noeud;
 
-	char** chemin_decoupe = malloc(nb_noeuds * sizeof(char*));
+	char **chemin_decoupe = malloc(nb_noeuds * sizeof(char*));
+	*chemin_decoupe = malloc(plus_long_noeud * sizeof(char));
 	strcpy(*chemin_decoupe, strtok(chemin, "/"));
 	for (size_t i = 1; i < nb_noeuds; ++i) {
+		*(chemin_decoupe+i) = malloc(plus_long_noeud * sizeof(char));
 		strcpy(*(chemin_decoupe+i), strtok(NULL, "/"));
 	}
 
