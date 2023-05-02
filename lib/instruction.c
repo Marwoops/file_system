@@ -149,10 +149,76 @@ noeud *ls (noeud *n, instruction *instr) {
 }
 
 noeud *cd (noeud *n, instruction *instr) {
-	return n;
+	if (instr->nombre_arguments>1) {
+		// Message d'erreur à fix
+		printf("cd n'attend pas plus d'un argument.");
+		exit(1);
+	}
+	flog("exécution de cd");
+	if(instr->nombre_arguments==0){
+		return n->racine;
+	}
+	else{
+		if(strcmp(instr->arg1,".." )==0){
+			return n->pere;
+		}
+		else{
+			bool *est_absolu=0;
+			size_t *profondeur=0;
+			char **c=decoupe_chemin(instr->arg1, est_absolu,profondeur);
+			size_t i=0;
+			noeud *temp=malloc(sizeof(noeud));
+			if(est_absolu){
+				temp=n->racine;
+				while (i!=*profondeur ){
+					if(!temp->est_dossier){
+						printf("L'un des noeud donné est un fichier");
+						exit(1);
+					}	
+					temp=get_elt(temp->fils, *(c+i));
+					if(temp==NULL){
+						printf("un des noeuds du chemin n'est pas présent dans l'arborescence");
+						exit(1);
+					}
+					++i;
+				}
+				return temp;
+			}
+			else{
+					temp=n;
+					while (i!=*profondeur){
+					if(!temp->est_dossier){
+						printf("L'un des noeud donné est un fichier");
+						exit(1);
+					}	
+					temp=get_elt(temp->fils, *(c+i));
+					if(temp==NULL){
+						printf("un des noeuds du chemin n'est pas présent dans l'arborescence");
+						exit(1);
+					}
+					++i;
+				}
+				return temp;
+			}
+		}
+	}
+
 }
 
 noeud *pwd (noeud *n, instruction *instr) {
+	if(instr->nombre_arguments>0) {
+		// Message d'erreur à fix
+		printf("pwd n'attend aucun argument.");
+		exit(1);
+	}
+	flog("exécution de pwd");
+	noeud *temp=n;
+	char *s="";
+	while(temp!=n->racine){
+		s=strcat(strcat("/",n->nom),s);
+		temp=temp->pere;
+	}
+	printf("%s",s);
 	return n;
 }
 

@@ -37,7 +37,7 @@ liste_noeud *creer_liste_avec_noeud(noeud* n) {
 }
 
 
-noeud *get_elt(liste_noeud* l, char nom[100]) {
+noeud *get_elt(liste_noeud* l, char *nom) {
 	assert(l != NULL);
 
     if(strcmp(nom,l->no->nom)==0) return l->no;

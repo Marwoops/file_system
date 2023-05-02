@@ -1,4 +1,6 @@
 ls
 touch cramptos
+mkdir cramptinho
+cd cramptinho
 ls
 cp r/hello r/palu
