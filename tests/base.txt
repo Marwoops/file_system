@@ -4,6 +4,8 @@ cd cramptinho
 mkdir caca
 touch prout
 ls
+cd caca
+ls
 cd ..
 ls
 cp r/hello r/palu

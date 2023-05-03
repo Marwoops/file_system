@@ -23,3 +23,15 @@ void exit_trop_d_arguments() {
 	puts("trop d'arguments");
 	exit(EXIT_TROP_D_ARGUMENTS);
 }
+
+void exit_argument_invalide(char *nom) {
+	puts("argument invalide, un dossier est attendu a la place d'un fichier ou l'inverse :");
+	printf("%s\n",nom);
+	exit(EXIT_ARGUMENT_INVALIDE);
+}
+
+void exit_argument_null(char *nom){
+	puts("arguments inexistants dans  l'arborescence :");
+	printf("%s\n",nom);
+	exit(EXIT_ARGUMENT_NULL);
+}

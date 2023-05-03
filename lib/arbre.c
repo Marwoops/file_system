@@ -95,7 +95,7 @@ char** decoupe_chemin(char *chemin, bool *est_absolu, size_t *taille) {
 		longueur_actuelle : plus_long_noeud;
 
 	char **chemin_decoupe = malloc(nb_noeuds * sizeof(char*));
-	*chemin_decoupe = malloc(plus_long_noeud * sizeof(char));
+	*chemin_decoupe = malloc(plus_long_noeud * sizeof(char)+1);
 	strcpy(*chemin_decoupe, strtok(chemin, "/"));
 
 	for (size_t i = 1; i < nb_noeuds; ++i) {
@@ -109,7 +109,7 @@ char** decoupe_chemin(char *chemin, bool *est_absolu, size_t *taille) {
 noeud *aller_a(noeud *n, chemin *chem) {
     assert(chem != NULL);
     assert(n != NULL);
-
+	char q[3] = {'.', '.', '\0'};
     if (chem->est_absolu) {
         chem->est_absolu = false;
         flog("déplacement à la racine");
@@ -123,20 +123,22 @@ noeud *aller_a(noeud *n, chemin *chem) {
     char *nom = *(chem->noeuds);
     chem->profondeur -= 1;
     chem->noeuds = chem->noeuds + 1;
-    
-    if (strcmp(nom, "..") && n->pere != NULL) {
+	printf("%s\n",nom);
+	printf("%d\n",strcmp(nom, ".."));
+    if ((strcmp(nom, "..")==0) && n->pere != NULL) {
+	   flogf("déplacement vers le pere de %s\n", nom);
+	   printf("mega prooooooooooooouuuuuuuuuuuuuuut");
        return aller_a(n->pere, chem);
 	}
 
-	
-	/*if (strcmp(nom, ".")) {
+	if (strcmp(nom, ".")==0) {
        return aller_a(n,chem);
-	}*/
+	}
     noeud *suivant = get_elt(n->fils, nom);
 
     // creer une erreur plus précise
-    if (suivant == NULL) exit_nom_invalide(nom);
-    if (!suivant->est_dossier) exit_nom_invalide(nom);
+    if (suivant == NULL) exit_argument_null(suivant->nom);
+    if (!suivant->est_dossier) exit_argument_invalide(suivant->nom);
     flogf("déplacement vers %s\n", nom);
     return aller_a(suivant, chem);
 }
