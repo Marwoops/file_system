@@ -8,7 +8,7 @@
 #include "debug.h"
 
 chemin *generer_chemin(char* noeuds) {
-   chemin *chem = malloc(sizeof(chemin));
+    chemin *chem = malloc(sizeof(chemin));
     if (chem == NULL) exit_malloc();
     chem->noeuds = decoupe_chemin(noeuds, &chem->est_absolu, &chem->profondeur);
     return chem;
@@ -123,15 +123,15 @@ noeud *aller_a(noeud *n, chemin *chem) {
     char *nom = *(chem->noeuds);
     chem->profondeur -= 1;
     chem->noeuds = chem->noeuds + 1;
-
     
     if (strcmp(nom, "..") && n->pere != NULL) {
        return aller_a(n->pere, chem);
 	}
-	if (strcmp(nom, ".")) {
-       return aller_a(n,chem);
-	}
 
+	
+	/*if (strcmp(nom, ".")) {
+       return aller_a(n,chem);
+	}*/
     noeud *suivant = get_elt(n->fils, nom);
 
     // creer une erreur plus précise
