@@ -1,6 +1,9 @@
-ls
 touch cramptos
 mkdir cramptinho
 cd cramptinho
+mkdir caca
+touch prout
+ls
+cd ..
 ls
 cp r/hello r/palu

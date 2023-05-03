@@ -22,7 +22,7 @@ typedef struct noeud noeud;
 typedef struct liste_noeud liste_noeud;
 typedef struct chemin chemin;
 
-extern chemin *generer_chemin(bool, size_t, char**);
+extern chemin *generer_chemin(char*);
 extern noeud *creer_arbre();
 extern noeud *creer_fichier(noeud* , char [100]);
 extern noeud *creer_dossier(noeud* , char [100], liste_noeud*);
@@ -32,4 +32,6 @@ extern void supprimer_noeud(noeud*, chemin*, noeud*);
 extern void supprimer_noeud_par_nom(noeud*, chemin*, char[100]);
 
 extern bool est_dossier(noeud*);
+char** decoupe_chemin(char *, bool *, size_t *);
+extern noeud *aller_a(noeud *, chemin*);
 #endif

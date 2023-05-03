@@ -81,50 +81,6 @@ void afficher_instruction(instruction *instr) {
 	} */
 }
 
-char** decoupe_chemin(char *chemin, bool *est_absolu, size_t *taille) {
-	assert(chemin != NULL);
-	assert(*chemin != '\0');
-
-	if (*chemin == '/') {
-		*est_absolu = true;
-		*chemin = *(chemin + 1);
-	} else {
-		*est_absolu = false;
-	}
-
-	size_t nb_noeuds = 1;
-	size_t plus_long_noeud = 0;
-	size_t longueur_actuelle = 0;
-	size_t len = strlen(chemin);
-
-	for (size_t i = 0; i < len; ++i) {
-		if (*(chemin + i) == '/') {
-			plus_long_noeud = (longueur_actuelle > plus_long_noeud) ?
-				longueur_actuelle : plus_long_noeud;
-			++nb_noeuds;
-			longueur_actuelle = 0;
-		} else {
-			++longueur_actuelle;
-		}
-	}
-
-	*taille = nb_noeuds;
-
-	plus_long_noeud = (longueur_actuelle > plus_long_noeud) ?
-		longueur_actuelle : plus_long_noeud;
-
-	char **chemin_decoupe = malloc(nb_noeuds * sizeof(char*));
-	*chemin_decoupe = malloc(plus_long_noeud * sizeof(char));
-	strcpy(*chemin_decoupe, strtok(chemin, "/"));
-
-	for (size_t i = 1; i < nb_noeuds; ++i) {
-		*(chemin_decoupe+i) = malloc(plus_long_noeud * sizeof(char));
-		strcpy(*(chemin_decoupe+i), strtok(NULL, "/"));
-	}
-
-	return chemin_decoupe;
-}
-
 bool est_nom_valide(char *input) {
 	size_t taille = strlen(input)-1;
 	if (taille > 100 || taille <= 0) exit_nom_invalide(input);
@@ -158,51 +114,8 @@ noeud *cd (noeud *n, instruction *instr) {
 	if(instr->nombre_arguments==0){
 		return n->racine;
 	}
-	else{
-		if(strcmp(instr->arg1,".." )==0){
-			return n->pere;
-		}
-		else{
-			bool *est_absolu=0;
-			size_t *profondeur=0;
-			char **c=decoupe_chemin(instr->arg1, est_absolu,profondeur);
-			size_t i=0;
-			noeud *temp=malloc(sizeof(noeud));
-			if(est_absolu){
-				temp=n->racine;
-				while (i!=*profondeur ){
-					if(!temp->est_dossier){
-						printf("L'un des noeud donné est un fichier");
-						exit(1);
-					}	
-					temp=get_elt(temp->fils, *(c+i));
-					if(temp==NULL){
-						printf("un des noeuds du chemin n'est pas présent dans l'arborescence");
-						exit(1);
-					}
-					++i;
-				}
-				return temp;
-			}
-			else{
-					temp=n;
-					while (i!=*profondeur){
-					if(!temp->est_dossier){
-						printf("L'un des noeud donné est un fichier");
-						exit(1);
-					}	
-					temp=get_elt(temp->fils, *(c+i));
-					if(temp==NULL){
-						printf("un des noeuds du chemin n'est pas présent dans l'arborescence");
-						exit(1);
-					}
-					++i;
-				}
-				return temp;
-			}
-		}
-	}
-
+		chemin *chem=generer_chemin(instr->arg1);
+		return aller_a(n,chem);
 }
 
 noeud *pwd (noeud *n, instruction *instr) {
