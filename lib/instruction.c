@@ -147,7 +147,7 @@ noeud *mkdir(noeud *n, instruction *instr) {
 
 	flogf("exécution de mkdir %s\n", instr->arg1);
 	liste_noeud *l =creer_liste();
-	noeud *dossier = creer_dossier(n->racine, n, instr->arg1, l);
+	creer_dossier(n, instr->arg1, l);
 
 	return n;
 }
@@ -162,7 +162,7 @@ noeud *touch(noeud *n, instruction *instr) {
 	if (!est_nom_valide(instr->arg1)) exit_nom_invalide(instr->arg1);
 
 	flogf("exécution de touch %s\n", instr->arg1);
-	noeud *fichier= creer_fichier(n->racine, n, instr->arg1);
+	creer_fichier(n, instr->arg1);
 
 	return n;
 }

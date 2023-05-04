@@ -29,45 +29,46 @@ noeud  *creer_arbre() {
 	char n[100] = {'\0'};
 	racine->est_dossier = true;
 	racine->racine = racine;
-	racine->fils=creer_liste();
+	racine->fils = creer_liste();
+	racine->pere = racine;
 	memcpy(racine->nom, n, sizeof(n));
 
 	return racine;
 }
 
-noeud *creer_fichier(noeud *racine, noeud *pere, char nom[100]) {
-	flogf("création du fichier %s\n", nom);
+noeud *creer_fichier(noeud *pere, char *nom) {
+	assert(pere != NULL);
+
+	flogf("création du fichier %s dans %s\n", nom, pere->nom);
 
 	noeud* fichier = malloc(sizeof(noeud));
 
 	if (fichier == NULL) exit_malloc();
 
 	fichier->est_dossier = false;
-	fichier->racine = racine;
-	if (pere != NULL) {
-		fichier->pere = pere;
-		ajouter_elt(pere->fils, fichier);
-	}
+	fichier->racine = pere->racine;
+	fichier->pere = pere;
+	ajouter_elt(pere->fils, fichier);
 
 	memcpy(fichier->nom, nom, sizeof(char)*100);
 
 	return fichier;
 }
 
-noeud *creer_dossier(noeud *racine, noeud *pere, char nom[100], liste_noeud *fils) {
-	flogf("création du dossier %s\n", nom);
+noeud *creer_dossier(noeud *pere, char *nom, liste_noeud *fils) {
+	assert(pere  != NULL);
+
+	flogf("création du fichier %s dans %s\n", nom, pere->nom);
 
 	noeud *dossier = malloc(sizeof(noeud));
 
 	if (dossier == NULL) exit_malloc();
 
 	dossier->est_dossier = true;
-	dossier->racine = racine;
+	dossier->racine = pere->racine;
 	dossier->fils = fils;
-	if (pere != NULL) {
-		dossier->pere = pere;
-		ajouter_elt(pere->fils, dossier);
-	}
+	dossier->pere = pere;
+	ajouter_elt(pere->fils, dossier);
 
 	memcpy(dossier->nom, nom, sizeof(char)*100);
 
