@@ -5,8 +5,19 @@ mkdir caca
 touch prout
 ls
 cd caca
+touch mapesa
 ls
 cd ..
 cd ..
 ls
 cd cramptinho/caca
+cd ..
+cd ..
+cp cramptinho/caca cramptinho/pipi
+ls
+cd cramptinho
+ls
+cd pipi
+ls
+cd ../caca
+ls

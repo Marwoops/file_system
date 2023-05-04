@@ -115,8 +115,9 @@ noeud *cd (noeud *n, instruction *instr) {
 	if(instr->nombre_arguments==0){
 		return n->racine;
 	}
-		chemin *chem=generer_chemin(instr->arg1);
-		return aller_a(n,chem);
+
+	chemin *chem=generer_chemin(instr->arg1);
+	return aller_a(n,chem);
 }
 
 noeud *pwd (noeud *n, instruction *instr) {
@@ -172,6 +173,30 @@ noeud *rm(noeud *n, instruction *instr) {
 }
 
 noeud *cp(noeud *n, instruction *instr) {
+	// ON VERIFIE PAS ENCORE SI CP EST LEGAL
+	if (instr->nombre_arguments != 2) {
+		// Message d'erreur à fix
+		printf("cp attend exactement deux chemins en argument.");
+		exit(1);
+	}
+
+	flogf("exécution de cp %s %s\n", instr->arg1, instr->arg2);
+
+	chemin *chem_src = generer_chemin(instr->arg1);
+	chemin *chem_dst = generer_chemin(instr->arg2);
+	char *nom_dst = sans_dernier_noeud(chem_dst);
+
+	noeud *src = aller_a(n, chem_src);
+	printf("nom de src : %s\n", src->nom);
+	noeud *dst = aller_a(n, chem_dst);
+	printf("nom de dst : %s\n", dst->nom);
+
+	noeud *copie = copier_noeud(dst, src);
+	printf("nom de src : %s\n", src->nom);
+	printf("nom de copie : %s\n", dst->nom);
+	strcpy(copie->nom, nom_dst);
+	//ajouter_noeud(dst, copie);
+
 	return n;
 }
 

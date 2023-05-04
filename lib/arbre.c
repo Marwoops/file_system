@@ -41,7 +41,7 @@ noeud *creer_fichier(noeud *pere, char *nom) {
 
 	flogf("création du fichier %s dans %s\n", nom, pere->nom);
 
-	noeud* fichier = malloc(sizeof(noeud));
+	noeud *fichier = malloc(sizeof(noeud));
 
 	if (fichier == NULL) exit_malloc();
 
@@ -50,7 +50,7 @@ noeud *creer_fichier(noeud *pere, char *nom) {
 	fichier->pere = pere;
 	ajouter_elt(pere->fils, fichier);
 
-	memcpy(fichier->nom, nom, sizeof(char)*100);
+	strcpy(fichier->nom, nom);
 
 	return fichier;
 }
@@ -58,7 +58,7 @@ noeud *creer_fichier(noeud *pere, char *nom) {
 noeud *creer_dossier(noeud *pere, char *nom, liste_noeud *fils) {
 	assert(pere  != NULL);
 
-	flogf("création du fichier %s dans %s\n", nom, pere->nom);
+	flogf("création du dossier %s dans %s\n", nom, pere->nom);
 
 	noeud *dossier = malloc(sizeof(noeud));
 
@@ -70,24 +70,28 @@ noeud *creer_dossier(noeud *pere, char *nom, liste_noeud *fils) {
 	dossier->pere = pere;
 	ajouter_elt(pere->fils, dossier);
 
-	memcpy(dossier->nom, nom, sizeof(char)*100);
+	strcpy(dossier->nom, nom);
 
 	return dossier;
 }
 
-noeud *copier_noeud(noeud *n) {
+noeud *copier_noeud(noeud* pere, noeud *n) {
+	assert(pere != NULL);
 	if (n == NULL) return NULL;
 
 	if(n->est_dossier) {
-		liste_noeud *l = copier_liste(n->fils);
-		return creer_dossier(n->pere, n->nom, l);
+		noeud *copie = creer_dossier(pere, n->nom, creer_liste());
+		copie->fils = copier_liste(copie, n->fils);
+		return copie;
 	}
 
-	return creer_fichier(n->pere, n->nom);
+	return creer_fichier(pere, n->nom);
 }
 
-noeud *ajouter_noeud(noeud *racine, chemin *chem, noeud *noeud) {
-	return racine;
+void ajouter_noeud(noeud *racine, noeud *n) {
+	assert(racine != NULL);
+
+	ajouter_elt(racine->fils, n);
 }
 
 char **decoupe_chemin(char *chemin, bool *est_absolu, size_t *taille) {
@@ -117,6 +121,12 @@ char **decoupe_chemin(char *chemin, bool *est_absolu, size_t *taille) {
         *(chemin_decoupe + i) = strdup(strtok(NULL, "/"));
 
     return chemin_decoupe;
+}
+
+char *sans_dernier_noeud(chemin *chem) {
+	assert(chem != NULL && chem->profondeur > 0);
+
+	return chem->noeuds[--chem->profondeur];
 }
 
 noeud *aller_a(noeud *n, chemin *chem) {
