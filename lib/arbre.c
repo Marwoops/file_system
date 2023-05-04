@@ -75,6 +75,17 @@ noeud *creer_dossier(noeud *pere, char *nom, liste_noeud *fils) {
 	return dossier;
 }
 
+noeud *copier_noeud(noeud *n) {
+	if (n == NULL) return NULL;
+
+	if(n->est_dossier) {
+		liste_noeud *l = copier_liste(n->fils);
+		return creer_dossier(n->pere, n->nom, l);
+	}
+
+	return creer_fichier(n->pere, n->nom);
+}
+
 noeud *ajouter_noeud(noeud *racine, chemin *chem, noeud *noeud) {
 	return racine;
 }
