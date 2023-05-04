@@ -9,8 +9,9 @@
 #include "liste.h"
 #include "exit.h"
 
-instruction *generer_instruction(char *input) {
+instruction *generer_instruction(char *_input) {
 	flog("génération de l'instruction");
+	char *input = strtok(_input, "\n");
 
 	instruction *instr = malloc(sizeof(instruction));
 	if (instr == NULL) exit_malloc();
@@ -145,10 +146,8 @@ noeud *mkdir(noeud *n, instruction *instr) {
 	if (!est_nom_valide(instr->arg1)) exit_nom_invalide(instr->arg1);
 
 	flogf("exécution de mkdir %s\n", instr->arg1);
-	liste_noeud *l=creer_liste();
-	noeud *dossier= creer_dossier(n->racine, instr->arg1, l);
-	dossier->pere=n;	
-	ajouter_elt(n->fils, dossier);
+	liste_noeud *l =creer_liste();
+	noeud *dossier = creer_dossier(n->racine, n, instr->arg1, l);
 
 	return n;
 }
@@ -163,9 +162,7 @@ noeud *touch(noeud *n, instruction *instr) {
 	if (!est_nom_valide(instr->arg1)) exit_nom_invalide(instr->arg1);
 
 	flogf("exécution de touch %s\n", instr->arg1);
-	noeud *fichier= creer_fichier(n->racine, instr->arg1);
-	fichier->pere=n;
-	ajouter_elt(n->fils, fichier);
+	noeud *fichier= creer_fichier(n->racine, n, instr->arg1);
 
 	return n;
 }
