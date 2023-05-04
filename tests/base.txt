@@ -7,5 +7,6 @@ ls
 cd caca
 ls
 cd ..
+cd ..
 ls
-cp r/hello r/palu
+cd cramptinho/caca
