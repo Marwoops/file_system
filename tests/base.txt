@@ -27,3 +27,7 @@ ls
 cd ..
 ls
 pwd
+mv cramptinho copie
+ls
+cd copie
+ls

@@ -50,7 +50,7 @@ noeud *get_elt(liste_noeud* l, char *nom) {
     return get_elt(l->succ, nom);
 }
 
-void ajouter_elt (liste_noeud* l, noeud* n) {
+void ajouter_elt(liste_noeud *l, noeud *n) {
 	assert(l != NULL);
 	assert(n != NULL);
 
@@ -61,16 +61,12 @@ void ajouter_elt (liste_noeud* l, noeud* n) {
 		return;
 	}
 
-    liste_noeud *l1 = l;
-
-    while(l1->succ != NULL && l1 != NULL) {
-        l1 = l1->succ;
-    }
-    l1->succ=creer_liste_avec_noeud(n);
+	while(l->succ != NULL) l = l->succ;
+	l->succ = creer_liste_avec_noeud(n);
 }
 
 void affiche_liste(liste_noeud *l) {
-    if(l == NULL){
+    if(l == NULL || l->no == NULL){
 		puts("");
 		return;
 	}
@@ -80,16 +76,21 @@ void affiche_liste(liste_noeud *l) {
 }
 
 
-noeud *supprimer_elt(liste_noeud* l, noeud* n) {
-    if  (n == l->no) {
-        l->no = l->succ->no;
-        l->succ = l->succ->succ;
-        return n;
+void supprimer_elt(liste_noeud* l, noeud* n) {
+	assert(l != NULL);
+	assert(n != NULL);
+
+
+	if (l->no == NULL) return;
+
+    if  (n == l->no && l->succ == NULL) {
+		l->no = NULL;
     }
 
-    if(n == NULL || l->succ == NULL) {
-        return NULL;
-    }
-
-    return supprimer_elt(l->succ, n);
+	while(l->succ != NULL) {
+		if (l->succ->no == n) {
+			l->succ = l->succ->succ;
+			return;
+		}
+	}
 }

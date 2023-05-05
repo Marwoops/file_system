@@ -20,6 +20,6 @@ extern liste_noeud *copier_liste(noeud*, liste_noeud*);
 extern noeud *get_elt(liste_noeud*, char*);
 extern liste_noeud *creer_liste_bis(liste_noeud*, noeud*);
 extern void ajouter_elt (liste_noeud*, noeud*);
-extern noeud *supprimer_elt(liste_noeud*, noeud*);
+extern void supprimer_elt(liste_noeud*, noeud*);
 extern void affiche_liste(liste_noeud*);
 #endif

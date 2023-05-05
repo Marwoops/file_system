@@ -196,6 +196,27 @@ noeud *cp(noeud *n, instruction *instr) {
 }
 
 noeud *mv(noeud *n, instruction *instr) {
+	// ON VERIFIE PAS ENCORE SI MV EST LEGAL
+	if (instr->nombre_arguments != 2) {
+		// Message d'erreur à fix
+		printf("mv attend exactement deux chemins en argument.");
+		exit(1);
+	}
+
+	flogf("exécution de mv %s %s\n", instr->arg1, instr->arg2);
+
+	chemin *chem_src = generer_chemin(instr->arg1);
+	chemin *chem_dst = generer_chemin(instr->arg2);
+	char *nom_dst = sans_dernier_noeud(chem_dst);
+
+	noeud *src = aller_a(n, chem_src);
+	noeud *dst = aller_a(n, chem_dst);
+
+	supprimer_elt(src->pere->fils, src);
+	src->pere = dst;
+	strcpy(src->nom, nom_dst);
+	ajouter_elt(dst->fils, src);
+
 	return n;
 }
 
