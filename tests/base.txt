@@ -31,5 +31,9 @@ mv cramptinho copie
 ls
 cd copie
 ls
+rm caca/mapesa
+cd caca
+ls
+cd ..
 rm caca
 ls

@@ -116,13 +116,17 @@ noeud *cd(noeud *n, instruction *instr) {
 		printf("cd n'attend pas plus d'un argument.");
 		exit(1);
 	}
+
 	flog("exécution de cd");
 	if(instr->nombre_arguments==0){
 		return n->racine;
 	}
 
 	chemin *chem = generer_chemin(instr->arg1);
-	return aller_a(n,chem);
+	noeud *dst = aller_a(n,chem);
+	if (!dst->est_dossier) exit_argument_invalide(dst->nom);
+
+	return dst;
 }
 
 noeud *pwd (noeud *n, instruction *instr) {
