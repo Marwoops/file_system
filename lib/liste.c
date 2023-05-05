@@ -42,6 +42,15 @@ liste_noeud *copier_liste(noeud *pere, liste_noeud *l) {
 	return copie;
 }
 
+void liberer_liste(liste_noeud *l) {
+	if (l == NULL) return;
+
+	liberer_noeud(l->no);
+	liberer_liste(l->succ);
+	free(l->succ);
+	free(l);
+}
+
 noeud *get_elt(liste_noeud* l, char *nom) {
 	assert(l != NULL);
 	if (l->no == NULL) return NULL;
@@ -83,8 +92,13 @@ void supprimer_elt(liste_noeud* l, noeud* n) {
 
 	if (l->no == NULL) return;
 
-    if  (n == l->no && l->succ == NULL) {
-		l->no = NULL;
+    if  (n == l->no) {
+		if (l->succ == NULL) {
+			l->no = NULL;
+		} else {
+			l->no = l->succ->no;
+			l->succ = l->succ->succ;
+		}
     }
 
 	while(l->succ != NULL) {
@@ -92,5 +106,6 @@ void supprimer_elt(liste_noeud* l, noeud* n) {
 			l->succ = l->succ->succ;
 			return;
 		}
+		l = l->succ;
 	}
 }

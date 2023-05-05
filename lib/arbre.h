@@ -6,7 +6,7 @@
 
 struct noeud {
 	bool est_dossier;
-	char nom[100];
+	char *nom;
 	struct noeud* pere;
 	struct noeud* racine;
 	struct liste_noeud *fils;
@@ -23,6 +23,7 @@ extern noeud *creer_dossier(noeud*, char*, liste_noeud*);
 extern noeud *copier_noeud(noeud*, noeud*);
 extern void afficher_chemin(noeud*);
 
+extern void liberer_noeud(noeud *n);
 extern void ajouter_noeud(noeud*, noeud*);
 extern void supprimer_noeud(noeud*, chemin*, noeud*);
 extern void supprimer_noeud_par_nom(noeud*, chemin*, char*);

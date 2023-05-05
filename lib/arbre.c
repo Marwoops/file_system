@@ -26,12 +26,11 @@ noeud  *creer_arbre() {
 
 	if (racine == NULL) exit_malloc();
 
-	char n[100] = {'\0'};
 	racine->est_dossier = true;
 	racine->racine = racine;
 	racine->fils = creer_liste();
 	racine->pere = racine;
-	memcpy(racine->nom, n, sizeof(n));
+	racine->nom = strdup("");
 
 	return racine;
 }
@@ -48,9 +47,8 @@ noeud *creer_fichier(noeud *pere, char *nom) {
 	fichier->est_dossier = false;
 	fichier->racine = pere->racine;
 	fichier->pere = pere;
+	fichier->nom = strdup(nom);
 	ajouter_elt(pere->fils, fichier);
-
-	strcpy(fichier->nom, nom);
 
 	return fichier;
 }
@@ -68,8 +66,8 @@ noeud *creer_dossier(noeud *pere, char *nom, liste_noeud *fils) {
 	dossier->racine = pere->racine;
 	dossier->fils = fils;
 	dossier->pere = pere;
+	dossier->nom = strdup(nom);
 	ajouter_elt(pere->fils, dossier);
-	strcpy(dossier->nom, nom);
 
 	return dossier;
 }
@@ -93,6 +91,20 @@ void afficher_chemin(noeud *n) {
 	if (n->pere != n->racine) afficher_chemin(n->pere);
 	printf("/%s", n->nom);
 }
+
+void liberer_noeud(noeud *n) {
+	if (n == NULL) return;
+
+	flogf("libération de %s\n", n->nom);
+
+	if (n->est_dossier) {
+		liberer_liste(n->fils);
+	}
+
+	free(n->nom);
+	free(n);
+}
+
 void ajouter_noeud(noeud *racine, noeud *n) {
 	assert(racine != NULL);
 
@@ -161,7 +173,10 @@ noeud *aller_a(noeud *n, chemin *chem) {
 
     // creer une erreur plus précise
     if (suivant == NULL) exit_argument_invalide(nom);
-    if (!suivant->est_dossier) exit_argument_invalide(suivant->nom);
+    if (!suivant->est_dossier) {
+		if (chem->profondeur == 0) return suivant;
+		else exit_argument_invalide(suivant->nom);
+	}
 
     flogf("déplacement vers %s\n", nom);
     return aller_a(suivant, chem);

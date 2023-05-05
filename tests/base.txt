@@ -31,3 +31,5 @@ mv cramptinho copie
 ls
 cd copie
 ls
+rm caca
+ls
