@@ -36,6 +36,8 @@ int main(int argc, char* argv[]) {
 
 	while ((getline(&ligne, &t, fichier_instructions)) != -1) {
 		flogf("lecture de l'instruction ligne %d\n", numero_ligne);
+		afficher_prompt(arbre);
+		printf("%s", ligne);
 		instr = generer_instruction(ligne);
 		arbre = traiter_instruction(arbre, instr);
 		numero_ligne++;

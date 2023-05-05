@@ -1,6 +1,7 @@
 touch cramptos
 mkdir cramptinho
 cd cramptinho
+pwd
 mkdir caca
 touch prout
 ls
@@ -21,3 +22,8 @@ cd pipi
 ls
 cd ../caca
 ls
+cd ..
+ls
+cd ..
+ls
+pwd

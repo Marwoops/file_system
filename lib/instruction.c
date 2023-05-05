@@ -9,6 +9,12 @@
 #include "liste.h"
 #include "exit.h"
 
+void afficher_prompt(noeud *n) {
+	printf("melyo@");
+	afficher_chemin(n);
+	printf(" > ");
+}
+
 instruction *generer_instruction(char *_input) {
 	flog("génération de l'instruction");
 	char *input = strtok(_input, "\n");
@@ -16,13 +22,12 @@ instruction *generer_instruction(char *_input) {
 	instruction *instr = malloc(sizeof(instruction));
 	if (instr == NULL) exit_malloc();
 
-	instr->cmd = get_commande(strtok(input, " \n"));
+	instr->cmd = get_commande(strtok(input, " "));
 
 	if (instr->cmd == INVALIDE) exit_commande_invalide();
 
 	instr->arg1 = strtok(NULL, " ");
 	instr->arg2 = strtok(NULL, " ");
-
 	instr->nombre_arguments = (instr->arg1 != NULL) + (instr->arg2 != NULL);
 
 	if (strtok(NULL, " ") != NULL) exit_trop_d_arguments();
@@ -94,7 +99,7 @@ bool est_nom_valide(char *input) {
 	return true;
 }
 
-noeud *ls (noeud *n, instruction *instr) {
+noeud *ls(noeud *n, instruction *instr) {
 	if(instr->nombre_arguments>0) {
 		// Message d'erreur à fix
 		printf("ls n'attend aucun argument.");
@@ -105,7 +110,7 @@ noeud *ls (noeud *n, instruction *instr) {
 	return n;
 }
 
-noeud *cd (noeud *n, instruction *instr) {
+noeud *cd(noeud *n, instruction *instr) {
 	if (instr->nombre_arguments>1) {
 		// Message d'erreur à fix
 		printf("cd n'attend pas plus d'un argument.");
@@ -116,24 +121,19 @@ noeud *cd (noeud *n, instruction *instr) {
 		return n->racine;
 	}
 
-	chemin *chem=generer_chemin(instr->arg1);
+	chemin *chem = generer_chemin(instr->arg1);
 	return aller_a(n,chem);
 }
 
 noeud *pwd (noeud *n, instruction *instr) {
-	if(instr->nombre_arguments>0) {
+	if (instr->nombre_arguments > 0) {
 		// Message d'erreur à fix
 		printf("pwd n'attend aucun argument.");
 		exit(1);
 	}
 	flog("exécution de pwd");
-	noeud *temp=n;
-	char *s="";
-	while(temp!=n->racine){
-		s=strcat(strcat("/",n->nom),s);
-		temp=temp->pere;
-	}
-	printf("%s",s);
+	afficher_chemin(n);
+	puts("");
 	return n;
 }
 
@@ -187,15 +187,10 @@ noeud *cp(noeud *n, instruction *instr) {
 	char *nom_dst = sans_dernier_noeud(chem_dst);
 
 	noeud *src = aller_a(n, chem_src);
-	printf("nom de src : %s\n", src->nom);
 	noeud *dst = aller_a(n, chem_dst);
-	printf("nom de dst : %s\n", dst->nom);
 
 	noeud *copie = copier_noeud(dst, src);
-	printf("nom de src : %s\n", src->nom);
-	printf("nom de copie : %s\n", dst->nom);
 	strcpy(copie->nom, nom_dst);
-	//ajouter_noeud(dst, copie);
 
 	return n;
 }

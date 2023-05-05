@@ -69,7 +69,6 @@ noeud *creer_dossier(noeud *pere, char *nom, liste_noeud *fils) {
 	dossier->fils = fils;
 	dossier->pere = pere;
 	ajouter_elt(pere->fils, dossier);
-
 	strcpy(dossier->nom, nom);
 
 	return dossier;
@@ -81,13 +80,19 @@ noeud *copier_noeud(noeud* pere, noeud *n) {
 
 	if(n->est_dossier) {
 		noeud *copie = creer_dossier(pere, n->nom, creer_liste());
-		copie->fils = copier_liste(copie, n->fils);
+		copier_liste(copie, n->fils);
 		return copie;
 	}
 
 	return creer_fichier(pere, n->nom);
 }
 
+void afficher_chemin(noeud *n) {
+	assert(n != NULL);
+
+	if (n->pere != n->racine) afficher_chemin(n->pere);
+	printf("/%s", n->nom);
+}
 void ajouter_noeud(noeud *racine, noeud *n) {
 	assert(racine != NULL);
 

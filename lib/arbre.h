@@ -21,6 +21,7 @@ extern noeud *creer_arbre();
 extern noeud *creer_fichier(noeud*, char*);
 extern noeud *creer_dossier(noeud*, char*, liste_noeud*);
 extern noeud *copier_noeud(noeud*, noeud*);
+extern void afficher_chemin(noeud*);
 
 extern void ajouter_noeud(noeud*, noeud*);
 extern void supprimer_noeud(noeud*, chemin*, noeud*);
