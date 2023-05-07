@@ -179,12 +179,11 @@ noeud *rm(noeud *n, instruction *instr) {
 		printf("rm attend exactement un chemin en argument.");
 		exit(1);
 	}
-
 	flogf("exécution de rm %s %s\n", instr->arg1);
 
 	chemin *chem = generer_chemin(instr->arg1);
 	noeud *a_suppr = aller_a(n, chem);
-
+	if(est_parent(a_suppr, n))exit_suppression_impossible(n->nom,a_suppr->nom);
 	supprimer_elt(a_suppr->pere->fils, a_suppr);
 	liberer_noeud(a_suppr);
 
@@ -207,7 +206,6 @@ noeud *cp(noeud *n, instruction *instr) {
 
 	noeud *src = aller_a(n, chem_src);
 	noeud *dst = aller_a(n, chem_dst);
-
 	noeud *copie = copier_noeud(dst, src);
 	strcpy(copie->nom, nom_dst);
 
@@ -230,7 +228,6 @@ noeud *mv(noeud *n, instruction *instr) {
 
 	noeud *src = aller_a(n, chem_src);
 	noeud *dst = aller_a(n, chem_dst);
-
 	supprimer_elt(src->pere->fils, src);
 	src->pere = dst;
 	strcpy(src->nom, nom_dst);
@@ -240,5 +237,13 @@ noeud *mv(noeud *n, instruction *instr) {
 }
 
 noeud *print(noeud *n, instruction *instr) {
+		if(instr->nombre_arguments>0) {
+		// Message d'erreur à fix
+		printf("print n'attend aucun argument.");
+		exit(1);
+	}
+	print_arbre(n->racine);
 	return n;
+
+
 }

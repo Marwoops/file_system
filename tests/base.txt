@@ -37,3 +37,4 @@ ls
 cd ..
 rm caca
 ls
+print

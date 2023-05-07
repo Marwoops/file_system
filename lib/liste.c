@@ -79,11 +79,16 @@ void affiche_liste(liste_noeud *l) {
 		puts("");
 		return;
 	}
-
-    printf("%s ", l->no->nom);
+	if(l->no->est_dossier)printf("%s (D), ", l->no->nom);
+	else printf("%s (F), ", l->no->nom);
     return affiche_liste(l->succ);
 }
 
+int taille_liste(liste_noeud *l){
+	if(l==NULL)return 0;
+	if(l->succ==NULL)return 1;
+	return 1+taille_liste(l->succ);
+}
 
 void supprimer_elt(liste_noeud* l, noeud* n) {
 	assert(l != NULL);

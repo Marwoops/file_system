@@ -42,3 +42,22 @@ void exit_argument_null(char *nom){
 	fermer_sortie_debug();
 	exit(EXIT_ARGUMENT_NULL);
 }
+
+void exit_suppression_impossible(char* src, char* dst){
+	puts("Impossible de supprimer un dossier parent.");
+	printf("%s est un parent de %s\n",dst,src);
+	fermer_sortie_debug();
+	exit(EXIT_SUPPRESSION_IMPOSSIBLE);
+}
+
+void exit_copie_impossible(){
+	puts("Impossible de copier un dossier parent dans un de ses dossier fils ou l'élément de copier est déja dans le dossier ciblé");
+	fermer_sortie_debug();
+	exit(EXIT_COPIE_IMPOSSIBLE);
+}
+
+void exit_deplacement_impossible(){
+	puts("Impossible de déplcaer un dossier parent dans un de ses dossier fils ou l'élément de déplacer est déja dans le dossier ciblé.");
+	fermer_sortie_debug();
+	exit(EXIT_COPIE_IMPOSSIBLE);
+}

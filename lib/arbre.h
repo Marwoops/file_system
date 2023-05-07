@@ -32,4 +32,6 @@ extern bool est_dossier(noeud*);
 extern char **decoupe_chemin(char *, bool *, size_t *);
 extern char *sans_dernier_noeud(chemin*);
 extern noeud *aller_a(noeud *, chemin*);
+extern bool est_parent(noeud*, noeud*);
+extern void print_arbre();
 #endif

@@ -1,0 +1,250 @@
+ouverture du fichier instruction
+initialisation de l'arbre
+création d'une liste
+lecture de l'instruction ligne 0
+génération de l'instruction
+traitement de l'instruction
+CMD : 4, ARGC : 1
+exécution de touch cramptos
+création du fichier cramptos dans 
+ajout de cramptos élément à la liste
+lecture de l'instruction ligne 1
+génération de l'instruction
+traitement de l'instruction
+CMD : 3, ARGC : 1
+exécution de mkdir cramptinho
+création d'une liste
+création du dossier cramptinho dans 
+ajout de cramptinho élément à la liste
+création d'une liste avec un noeud
+lecture de l'instruction ligne 2
+génération de l'instruction
+traitement de l'instruction
+CMD : 1, ARGC : 1
+exécution de cd
+déplacement vers cramptinho
+lecture de l'instruction ligne 3
+génération de l'instruction
+traitement de l'instruction
+CMD : 2, ARGC : 0
+exécution de pwd
+lecture de l'instruction ligne 4
+génération de l'instruction
+traitement de l'instruction
+CMD : 3, ARGC : 1
+exécution de mkdir caca
+création d'une liste
+création du dossier caca dans cramptinho
+ajout de caca élément à la liste
+lecture de l'instruction ligne 5
+génération de l'instruction
+traitement de l'instruction
+CMD : 4, ARGC : 1
+exécution de touch prout
+création du fichier prout dans cramptinho
+ajout de prout élément à la liste
+création d'une liste avec un noeud
+lecture de l'instruction ligne 6
+génération de l'instruction
+traitement de l'instruction
+CMD : 0, ARGC : 0
+exécution de ls
+lecture de l'instruction ligne 7
+génération de l'instruction
+traitement de l'instruction
+CMD : 1, ARGC : 1
+exécution de cd
+déplacement vers caca
+lecture de l'instruction ligne 8
+génération de l'instruction
+traitement de l'instruction
+CMD : 4, ARGC : 1
+exécution de touch mapesa
+création du fichier mapesa dans caca
+ajout de mapesa élément à la liste
+lecture de l'instruction ligne 9
+génération de l'instruction
+traitement de l'instruction
+CMD : 0, ARGC : 0
+exécution de ls
+lecture de l'instruction ligne 10
+génération de l'instruction
+traitement de l'instruction
+CMD : 1, ARGC : 1
+exécution de cd
+déplacement vers le pere de ..
+lecture de l'instruction ligne 11
+génération de l'instruction
+traitement de l'instruction
+CMD : 1, ARGC : 1
+exécution de cd
+déplacement vers le pere de ..
+lecture de l'instruction ligne 12
+génération de l'instruction
+traitement de l'instruction
+CMD : 0, ARGC : 0
+exécution de ls
+lecture de l'instruction ligne 13
+génération de l'instruction
+traitement de l'instruction
+CMD : 1, ARGC : 1
+exécution de cd
+déplacement vers cramptinho
+déplacement vers caca
+lecture de l'instruction ligne 14
+génération de l'instruction
+traitement de l'instruction
+CMD : 1, ARGC : 1
+exécution de cd
+déplacement vers le pere de ..
+lecture de l'instruction ligne 15
+génération de l'instruction
+traitement de l'instruction
+CMD : 1, ARGC : 1
+exécution de cd
+déplacement vers le pere de ..
+lecture de l'instruction ligne 16
+génération de l'instruction
+traitement de l'instruction
+CMD : 6, ARGC : 2
+exécution de cp cramptinho/caca cramptinho/pipi
+déplacement vers cramptinho
+déplacement vers caca
+déplacement vers cramptinho
+création d'une liste
+création du dossier caca dans cramptinho
+ajout de caca élément à la liste
+création d'une liste avec un noeud
+création d'une liste
+création du fichier mapesa dans caca
+ajout de mapesa élément à la liste
+lecture de l'instruction ligne 17
+génération de l'instruction
+traitement de l'instruction
+CMD : 0, ARGC : 0
+exécution de ls
+lecture de l'instruction ligne 18
+génération de l'instruction
+traitement de l'instruction
+CMD : 1, ARGC : 1
+exécution de cd
+déplacement vers cramptinho
+lecture de l'instruction ligne 19
+génération de l'instruction
+traitement de l'instruction
+CMD : 0, ARGC : 0
+exécution de ls
+lecture de l'instruction ligne 20
+génération de l'instruction
+traitement de l'instruction
+CMD : 1, ARGC : 1
+exécution de cd
+déplacement vers pipi
+lecture de l'instruction ligne 21
+génération de l'instruction
+traitement de l'instruction
+CMD : 0, ARGC : 0
+exécution de ls
+lecture de l'instruction ligne 22
+génération de l'instruction
+traitement de l'instruction
+CMD : 1, ARGC : 1
+exécution de cd
+déplacement vers le pere de ..
+déplacement vers caca
+lecture de l'instruction ligne 23
+génération de l'instruction
+traitement de l'instruction
+CMD : 0, ARGC : 0
+exécution de ls
+lecture de l'instruction ligne 24
+génération de l'instruction
+traitement de l'instruction
+CMD : 1, ARGC : 1
+exécution de cd
+déplacement vers le pere de ..
+lecture de l'instruction ligne 25
+génération de l'instruction
+traitement de l'instruction
+CMD : 0, ARGC : 0
+exécution de ls
+lecture de l'instruction ligne 26
+génération de l'instruction
+traitement de l'instruction
+CMD : 1, ARGC : 1
+exécution de cd
+déplacement vers le pere de ..
+lecture de l'instruction ligne 27
+génération de l'instruction
+traitement de l'instruction
+CMD : 0, ARGC : 0
+exécution de ls
+lecture de l'instruction ligne 28
+génération de l'instruction
+traitement de l'instruction
+CMD : 2, ARGC : 0
+exécution de pwd
+lecture de l'instruction ligne 29
+génération de l'instruction
+traitement de l'instruction
+CMD : 7, ARGC : 2
+exécution de mv cramptinho copie
+déplacement vers cramptinho
+ajout de copie élément à la liste
+création d'une liste avec un noeud
+lecture de l'instruction ligne 30
+génération de l'instruction
+traitement de l'instruction
+CMD : 0, ARGC : 0
+exécution de ls
+lecture de l'instruction ligne 31
+génération de l'instruction
+traitement de l'instruction
+CMD : 1, ARGC : 1
+exécution de cd
+déplacement vers copie
+lecture de l'instruction ligne 32
+génération de l'instruction
+traitement de l'instruction
+CMD : 0, ARGC : 0
+exécution de ls
+lecture de l'instruction ligne 33
+génération de l'instruction
+traitement de l'instruction
+CMD : 5, ARGC : 1
+exécution de rm caca/mapesa 
+déplacement vers caca
+libération de mapesa
+lecture de l'instruction ligne 34
+génération de l'instruction
+traitement de l'instruction
+CMD : 1, ARGC : 1
+exécution de cd
+déplacement vers caca
+lecture de l'instruction ligne 35
+génération de l'instruction
+traitement de l'instruction
+CMD : 0, ARGC : 0
+exécution de ls
+lecture de l'instruction ligne 36
+génération de l'instruction
+traitement de l'instruction
+CMD : 1, ARGC : 1
+exécution de cd
+déplacement vers le pere de ..
+lecture de l'instruction ligne 37
+génération de l'instruction
+traitement de l'instruction
+CMD : 5, ARGC : 1
+exécution de rm caca 
+déplacement vers caca
+libération de caca
+lecture de l'instruction ligne 38
+génération de l'instruction
+traitement de l'instruction
+CMD : 0, ARGC : 0
+exécution de ls
+lecture de l'instruction ligne 39
+génération de l'instruction
+traitement de l'instruction
+CMD : 8, ARGC : 0

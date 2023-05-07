@@ -23,4 +23,5 @@ extern liste_noeud *creer_liste_bis(liste_noeud*, noeud*);
 extern void ajouter_elt (liste_noeud*, noeud*);
 extern void supprimer_elt(liste_noeud*, noeud*);
 extern void affiche_liste(liste_noeud*);
+extern int taille_liste(liste_noeud*);	
 #endif

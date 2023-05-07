@@ -117,14 +117,13 @@ char **decoupe_chemin(char *chemin, bool *est_absolu, size_t *taille) {
 
     if (*chemin == '/') {
         *est_absolu = true;
-        *chemin = *(chemin + 1);
+        chemin = (chemin+1);
     } else {
         *est_absolu = false;
     }
 
     size_t nb_noeuds = 1;
     size_t len = strlen(chemin);
-
     for (size_t i = 0; i < len; ++i) {
         if (*(chemin + i) == '/') ++nb_noeuds;
     }
@@ -133,7 +132,6 @@ char **decoupe_chemin(char *chemin, bool *est_absolu, size_t *taille) {
 
     char **chemin_decoupe = malloc((nb_noeuds+1) * sizeof(char*));
     *chemin_decoupe = strdup(strtok(chemin, "/"));
-
     for (size_t i = 1; i < nb_noeuds; ++i)
         *(chemin_decoupe + i) = strdup(strtok(NULL, "/"));
 
@@ -147,17 +145,15 @@ char *sans_dernier_noeud(chemin *chem) {
 }
 
 noeud *aller_a(noeud *n, chemin *chem) {
-	assert(chem != NULL);
+	assert(chem != NULL);	
     assert(n != NULL);
-
     if (chem->est_absolu) {
         chem->est_absolu = false;
         flog("déplacement à la racine");
         return aller_a(n->racine, chem);
     }
-
+	//printf("%d\n", chem->profondeur);
     if (chem->profondeur == 0) return n;
-
     char *nom = *(chem->noeuds);
     chem->profondeur -= 1;
 	chem->noeuds = chem->noeuds + 1;
@@ -168,16 +164,52 @@ noeud *aller_a(noeud *n, chemin *chem) {
 	}
 
 	if (strcmp(nom, ".") == 0) return aller_a(n,chem);
-
     noeud *suivant = get_elt(n->fils, nom);
-
     // creer une erreur plus précise
-    if (suivant == NULL) exit_argument_invalide(nom);
+    if (suivant == NULL){exit_argument_invalide(nom);}
     if (!suivant->est_dossier) {
 		if (chem->profondeur == 0) return suivant;
-		else exit_argument_invalide(suivant->nom);
+		else exit_argument_invalide(suivant->nom); 	
 	}
 
     flogf("déplacement vers %s\n", nom);
     return aller_a(suivant, chem);
+}
+
+bool est_parent(noeud *src, noeud *dst) {
+   if (dst == src) return true;
+   if (dst == dst->racine) return false;
+   return est_parent(src, dst->pere);
+}
+
+void print_arbre(noeud *n){
+	if(n==NULL)return;
+	if(n==n->racine){
+		printf("Noeud %s (D), %d fils : ",n->nom, taille_liste(n->fils));
+		affiche_liste(n->fils);
+		printf("\n");
+	}
+	else{
+		if(n->est_dossier){
+			printf("Noeud %s (D), pere : %s, %d fils : ", n->nom, n->pere->nom,taille_liste(n->fils));
+			affiche_liste(n->fils);
+			printf("\n");
+		}
+		else{
+			printf("Noeud %s (F), pere : %s, 0 fils : ", n->nom, n->pere->nom);
+			printf("\n");
+		}
+	}
+	if(n->est_dossier && taille_liste(n->fils)!=0){
+
+		liste_noeud *temp=n->fils;
+		while(temp!=NULL){
+			print_arbre(temp->no);
+			temp=temp->succ;
+			
+		}
+	}
+	else {
+		return;
+	}
 }
