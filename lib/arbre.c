@@ -117,7 +117,12 @@ char **decoupe_chemin(char *chemin, bool *est_absolu, size_t *taille) {
 
     if (*chemin == '/') {
         *est_absolu = true;
-        chemin = (chemin+1);
+        chemin = chemin + 1;
+		if (*chemin == '\0') {
+			// chemin vers la racine
+			*taille = 0;
+			return NULL;
+		}
     } else {
         *est_absolu = false;
     }
@@ -147,13 +152,15 @@ char *sans_dernier_noeud(chemin *chem) {
 noeud *aller_a(noeud *n, chemin *chem) {
 	assert(chem != NULL);
     assert(n != NULL);
+
     if (chem->est_absolu) {
         chem->est_absolu = false;
         flog("déplacement à la racine");
         return aller_a(n->racine, chem);
     }
-	//printf("%d\n", chem->profondeur);
+
     if (chem->profondeur == 0) return n;
+
     char *nom = *(chem->noeuds);
     chem->profondeur -= 1;
 	chem->noeuds = chem->noeuds + 1;
@@ -164,9 +171,11 @@ noeud *aller_a(noeud *n, chemin *chem) {
 	}
 
 	if (strcmp(nom, ".") == 0) return aller_a(n,chem);
+
     noeud *suivant = get_elt(n->fils, nom);
-    // creer une erreur plus précise
-    if (suivant == NULL){exit_argument_invalide(nom);}
+	// Message d'erreur à fix
+    if (suivant == NULL) exit_argument_invalide(nom);
+
     if (!suivant->est_dossier) {
 		if (chem->profondeur == 0) return suivant;
 		else exit_argument_invalide(suivant->nom);

@@ -209,8 +209,10 @@ noeud *cp(noeud *n, instruction *instr) {
 	noeud *dst = aller_a(n, chem_dst);
 
 	// Message d'erreur à fix
-	if (src->est_dossier && est_parent(src, dst)) exit_suppression_impossible(src->nom, dst->nom);
-	noeud *copie = copier_noeud(dst, src, nom_dst);
+	if (src->est_dossier && est_parent(src, dst))
+		exit_suppression_impossible(src->nom, dst->nom);
+
+	copier_noeud(dst, src, nom_dst);
 
 	return n;
 }
