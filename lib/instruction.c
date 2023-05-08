@@ -237,13 +237,11 @@ noeud *mv(noeud *n, instruction *instr) {
 }
 
 noeud *print(noeud *n, instruction *instr) {
-		if(instr->nombre_arguments>0) {
+		if (instr->nombre_arguments > 0) {
 		// Message d'erreur à fix
 		printf("print n'attend aucun argument.");
 		exit(1);
 	}
-	print_arbre(n->racine);
+	print_noeud(n->racine);
 	return n;
-
-
 }

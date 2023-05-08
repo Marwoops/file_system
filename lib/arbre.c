@@ -145,7 +145,7 @@ char *sans_dernier_noeud(chemin *chem) {
 }
 
 noeud *aller_a(noeud *n, chemin *chem) {
-	assert(chem != NULL);	
+	assert(chem != NULL);
     assert(n != NULL);
     if (chem->est_absolu) {
         chem->est_absolu = false;
@@ -169,7 +169,7 @@ noeud *aller_a(noeud *n, chemin *chem) {
     if (suivant == NULL){exit_argument_invalide(nom);}
     if (!suivant->est_dossier) {
 		if (chem->profondeur == 0) return suivant;
-		else exit_argument_invalide(suivant->nom); 	
+		else exit_argument_invalide(suivant->nom);
 	}
 
     flogf("déplacement vers %s\n", nom);
@@ -182,34 +182,20 @@ bool est_parent(noeud *src, noeud *dst) {
    return est_parent(src, dst->pere);
 }
 
-void print_arbre(noeud *n){
-	if(n==NULL)return;
-	if(n==n->racine){
-		printf("Noeud %s (D), %d fils : ",n->nom, taille_liste(n->fils));
-		affiche_liste(n->fils);
-		printf("\n");
-	}
-	else{
-		if(n->est_dossier){
-			printf("Noeud %s (D), pere : %s, %d fils : ", n->nom, n->pere->nom,taille_liste(n->fils));
-			affiche_liste(n->fils);
-			printf("\n");
-		}
-		else{
-			printf("Noeud %s (F), pere : %s, 0 fils : ", n->nom, n->pere->nom);
-			printf("\n");
-		}
-	}
-	if(n->est_dossier && taille_liste(n->fils)!=0){
+void print_noeud(noeud *n) {
+	assert(n != NULL);
 
-		liste_noeud *temp=n->fils;
-		while(temp!=NULL){
-			print_arbre(temp->no);
-			temp=temp->succ;
-			
-		}
-	}
-	else {
+	if (!n->est_dossier) {
+		printf("Noeud %s (F), pere : %s, 0 fils\n", n->nom, n->pere->nom);
 		return;
 	}
+
+	size_t taille = taille_liste(n->fils);
+	if (n == n->racine) printf("Noeud / (D)");
+	else printf("Noeud %s (D), pere : %s", n->nom, n->pere->nom);
+
+	printf(", %lu fils : ", taille);
+	affiche_liste(n->fils);
+
+	if (taille > 0) print_liste(n->fils);
 }
