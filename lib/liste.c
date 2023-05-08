@@ -36,7 +36,7 @@ liste_noeud *copier_liste(noeud *pere, liste_noeud *l) {
 
 	liste_noeud *copie = creer_liste();
 	//printf("sous noeud : %s\n", l->no->nom);
-	copie->no = copier_noeud(pere, l->no);
+	copie->no = copier_noeud(pere, l->no, l->no->nom);
 	copie->succ = copier_liste(pere, l->succ);
 
 	return copie;
@@ -70,7 +70,18 @@ void ajouter_elt(liste_noeud *l, noeud *n) {
 		return;
 	}
 
-	while(l->succ != NULL) l = l->succ;
+	while(l->succ != NULL) {
+		if (strcmp(l->no->nom, n->nom) == 0) {
+			// Message d'erreur à fix
+			printf("le nom %s existe déjà dans la liste\n", n->nom);
+			exit(1);
+		}
+		l = l->succ;
+	}
+	if (strcmp(l->no->nom, n->nom) == 0) {
+		printf("le nom %s existe déjà dans la liste\n", n->nom);
+		exit(1);
+	}
 	l->succ = creer_liste_avec_noeud(n);
 }
 

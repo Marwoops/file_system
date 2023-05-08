@@ -20,7 +20,7 @@ extern chemin *generer_chemin(char*);
 extern noeud *creer_arbre();
 extern noeud *creer_fichier(noeud*, char*);
 extern noeud *creer_dossier(noeud*, char*, liste_noeud*);
-extern noeud *copier_noeud(noeud*, noeud*);
+extern noeud *copier_noeud(noeud*, noeud*, char*);
 extern void afficher_chemin(noeud*);
 
 extern void liberer_noeud(noeud *n);

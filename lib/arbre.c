@@ -72,12 +72,12 @@ noeud *creer_dossier(noeud *pere, char *nom, liste_noeud *fils) {
 	return dossier;
 }
 
-noeud *copier_noeud(noeud* pere, noeud *n) {
+noeud *copier_noeud(noeud* pere, noeud *n, char *nom) {
 	assert(pere != NULL);
 	if (n == NULL) return NULL;
 
 	if(n->est_dossier) {
-		noeud *copie = creer_dossier(pere, n->nom, creer_liste());
+		noeud *copie = creer_dossier(pere, nom, creer_liste());
 		copier_liste(copie, n->fils);
 		return copie;
 	}

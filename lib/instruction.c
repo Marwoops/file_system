@@ -173,17 +173,19 @@ noeud *touch(noeud *n, instruction *instr) {
 }
 
 noeud *rm(noeud *n, instruction *instr) {
-	// ON VERIFIE PAS ENCORE SI RM EST LEGAL
 	if (instr->nombre_arguments != 1) {
 		// Message d'erreur à fix
 		printf("rm attend exactement un chemin en argument.");
 		exit(1);
 	}
+
 	flogf("exécution de rm %s %s\n", instr->arg1);
 
 	chemin *chem = generer_chemin(instr->arg1);
 	noeud *a_suppr = aller_a(n, chem);
-	if(est_parent(a_suppr, n))exit_suppression_impossible(n->nom,a_suppr->nom);
+
+	// Message d'erreur à fix
+	if (a_suppr->est_dossier && est_parent(a_suppr, n)) exit_suppression_impossible(n->nom, a_suppr->nom);
 	supprimer_elt(a_suppr->pere->fils, a_suppr);
 	liberer_noeud(a_suppr);
 
@@ -191,7 +193,6 @@ noeud *rm(noeud *n, instruction *instr) {
 }
 
 noeud *cp(noeud *n, instruction *instr) {
-	// ON VERIFIE PAS ENCORE SI CP EST LEGAL
 	if (instr->nombre_arguments != 2) {
 		// Message d'erreur à fix
 		printf("cp attend exactement deux chemins en argument.");
@@ -206,14 +207,15 @@ noeud *cp(noeud *n, instruction *instr) {
 
 	noeud *src = aller_a(n, chem_src);
 	noeud *dst = aller_a(n, chem_dst);
-	noeud *copie = copier_noeud(dst, src);
-	strcpy(copie->nom, nom_dst);
+
+	// Message d'erreur à fix
+	if (src->est_dossier && est_parent(src, dst)) exit_suppression_impossible(src->nom, dst->nom);
+	noeud *copie = copier_noeud(dst, src, nom_dst);
 
 	return n;
 }
 
 noeud *mv(noeud *n, instruction *instr) {
-	// ON VERIFIE PAS ENCORE SI MV EST LEGAL
 	if (instr->nombre_arguments != 2) {
 		// Message d'erreur à fix
 		printf("mv attend exactement deux chemins en argument.");
@@ -228,6 +230,9 @@ noeud *mv(noeud *n, instruction *instr) {
 
 	noeud *src = aller_a(n, chem_src);
 	noeud *dst = aller_a(n, chem_dst);
+	// Message d'erreur à fix
+	if (src->est_dossier && est_parent(src, dst)) exit_suppression_impossible(src->nom, dst->nom);
+
 	supprimer_elt(src->pere->fils, src);
 	src->pere = dst;
 	strcpy(src->nom, nom_dst);
