@@ -113,11 +113,13 @@ size_t taille_liste(liste_noeud *l){
 }
 
 void supprimer_elt(liste_noeud* l, noeud* n) {
-	assert(l != NULL);
 	assert(n != NULL);
 
-
-	if (l->no == NULL) return;
+	if (l == NULL || l->no == NULL) {
+		// Message d'erreur à fix
+		printf("le noeud %s n'est pas présent dans la liste\n", n->nom);
+		exit(1);
+	}
 
     if  (n == l->no) {
 		if (l->succ == NULL) {
@@ -126,6 +128,7 @@ void supprimer_elt(liste_noeud* l, noeud* n) {
 			l->no = l->succ->no;
 			l->succ = l->succ->succ;
 		}
+		return;
     }
 
 	while(l->succ != NULL) {
@@ -135,4 +138,6 @@ void supprimer_elt(liste_noeud* l, noeud* n) {
 		}
 		l = l->succ;
 	}
+	printf("le noeud %s n'est pas présent dans la liste\n", n->nom);
+	exit(1);
 }

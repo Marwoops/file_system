@@ -31,10 +31,12 @@ mv cramptinho copie
 ls
 cd copie
 ls
-rm caca/mapesa
 cd caca
 ls
+rm mapesa
+ls
 cd ..
+ls
 rm caca
 ls
 print
