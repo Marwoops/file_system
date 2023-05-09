@@ -116,9 +116,7 @@ void supprimer_elt(liste_noeud* l, noeud* n) {
 	assert(n != NULL);
 
 	if (l == NULL || l->no == NULL) {
-		// Message d'erreur à fix
-		printf("le noeud %s n'est pas présent dans la liste\n", n->nom);
-		exit(1);
+		exit_argument_null(l->no->nom);
 	}
 
     if  (n == l->no) {

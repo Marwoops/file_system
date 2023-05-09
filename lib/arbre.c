@@ -37,6 +37,7 @@ noeud  *creer_arbre() {
 
 noeud *creer_fichier(noeud *pere, char *nom) {
 	assert(pere != NULL);
+	if(est_nom_valide(nom))exit_nom_invalide(nom);
 
 	flogf("création du fichier %s dans %s\n", nom, pere->nom);
 
@@ -55,6 +56,7 @@ noeud *creer_fichier(noeud *pere, char *nom) {
 
 noeud *creer_dossier(noeud *pere, char *nom, liste_noeud *fils) {
 	assert(pere  != NULL);
+	if(est_nom_valide(nom))exit_nom_invalide(nom);
 
 	flogf("création du dossier %s dans %s\n", nom, pere->nom);
 
@@ -174,7 +176,7 @@ noeud *aller_a(noeud *n, chemin *chem) {
 
     noeud *suivant = get_elt(n->fils, nom);
 	// Message d'erreur à fix
-    if (suivant == NULL) exit_argument_invalide(nom);
+    if (suivant == NULL) exit_argument_null(nom);
 
     if (!suivant->est_dossier) {
 		if (chem->profondeur == 0) return suivant;

@@ -24,13 +24,13 @@ instruction *generer_instruction(char *_input) {
 
 	instr->cmd = get_commande(strtok(input, " "));
 
-	if (instr->cmd == INVALIDE) exit_commande_invalide();
+	if (instr->cmd == INVALIDE) exit_commande_invalide(instr->cmd);
 
 	instr->arg1 = strtok(NULL, " ");
 	instr->arg2 = strtok(NULL, " ");
 	instr->nombre_arguments = (instr->arg1 != NULL) + (instr->arg2 != NULL);
 
-	if (strtok(NULL, " ") != NULL) exit_trop_d_arguments();
+	//if (strtok(NULL, " ") != NULL) exit_trop_d_arguments();
 
 	return instr;
 }
@@ -95,15 +95,13 @@ bool est_nom_valide(char *input) {
 		if (!isalnum(input[t])) {
 			return false;
 		}
-	}
+	} 
 	return true;
 }
 
 noeud *ls(noeud *n, instruction *instr) {
 	if(instr->nombre_arguments>0) {
-		// Message d'erreur à fix
-		printf("ls n'attend aucun argument.");
-		exit(1);
+		exit_nombre_d_argument("ls", 0, instr->nombre_arguments);
 	}
 	flog("exécution de ls");
 	affiche_liste(n->fils);
@@ -112,9 +110,7 @@ noeud *ls(noeud *n, instruction *instr) {
 
 noeud *cd(noeud *n, instruction *instr) {
 	if (instr->nombre_arguments>1) {
-		// Message d'erreur à fix
-		printf("cd n'attend pas plus d'un argument.");
-		exit(1);
+		exit_nombre_d_argument("cd", 0, instr->nombre_arguments);
 	}
 
 	flog("exécution de cd");
@@ -124,16 +120,14 @@ noeud *cd(noeud *n, instruction *instr) {
 
 	chemin *chem = generer_chemin(instr->arg1);
 	noeud *dst = aller_a(n,chem);
-	if (!dst->est_dossier) exit_argument_invalide(dst->nom);
+	if (!dst->est_dossier) exit_pas_un_dossier(dst->nom);
 
 	return dst;
 }
 
 noeud *pwd (noeud *n, instruction *instr) {
 	if (instr->nombre_arguments > 0) {
-		// Message d'erreur à fix
-		printf("pwd n'attend aucun argument.");
-		exit(1);
+		exit_nombre_d_argument("pwd", 0, instr->nombre_arguments);	
 	}
 	flog("exécution de pwd");
 	afficher_chemin(n);
@@ -143,12 +137,8 @@ noeud *pwd (noeud *n, instruction *instr) {
 
 noeud *mkdir(noeud *n, instruction *instr) {
 	if (instr->nombre_arguments!=1) {
-		// Message d'erreur à fix
-		printf("mkdir attend exactement un fichier en argument.");
-		exit(1);
+		exit_nombre_d_argument("mkdir", 1, instr->nombre_arguments);
 	}
-
-	if (!est_nom_valide(instr->arg1)) exit_nom_invalide(instr->arg1);
 
 	flogf("exécution de mkdir %s\n", instr->arg1);
 	liste_noeud *l =creer_liste();
@@ -159,12 +149,8 @@ noeud *mkdir(noeud *n, instruction *instr) {
 
 noeud *touch(noeud *n, instruction *instr) {
 	if (instr->nombre_arguments!=1) {
-		// Message d'erreur à fix
-		printf("touch attend exactement un fichier en argument.");
-		exit(1);
+		exit_nombre_d_argument("touch", 1, instr->nombre_arguments);
 	}
-
-	if (!est_nom_valide(instr->arg1)) exit_nom_invalide(instr->arg1);
 
 	flogf("exécution de touch %s\n", instr->arg1);
 	creer_fichier(n, instr->arg1);
@@ -174,9 +160,7 @@ noeud *touch(noeud *n, instruction *instr) {
 
 noeud *rm(noeud *n, instruction *instr) {
 	if (instr->nombre_arguments != 1) {
-		// Message d'erreur à fix
-		printf("rm attend exactement un chemin en argument.");
-		exit(1);
+		exit_nombre_d_argument("rm", 1, instr->nombre_arguments);
 	}
 
 	flogf("exécution de rm %s %s\n", instr->arg1);
@@ -184,8 +168,7 @@ noeud *rm(noeud *n, instruction *instr) {
 	chemin *chem = generer_chemin(instr->arg1);
 	noeud *a_suppr = aller_a(n, chem);
 
-	// Message d'erreur à fix
-	if (a_suppr->est_dossier && est_parent(a_suppr, n)) exit_suppression_impossible(n->nom, a_suppr->nom);
+	if (a_suppr->est_dossier && est_parent(a_suppr, n)) exit_action_impossible(instr, n->nom, a_suppr->nom);
 	supprimer_elt(a_suppr->pere->fils, a_suppr);
 	liberer_noeud(a_suppr);
 
@@ -194,9 +177,7 @@ noeud *rm(noeud *n, instruction *instr) {
 
 noeud *cp(noeud *n, instruction *instr) {
 	if (instr->nombre_arguments != 2) {
-		// Message d'erreur à fix
-		printf("cp attend exactement deux chemins en argument.");
-		exit(1);
+		exit_nombre_d_argument("cp", 2, instr->nombre_arguments);
 	}
 
 	flogf("exécution de cp %s %s\n", instr->arg1, instr->arg2);
@@ -210,7 +191,7 @@ noeud *cp(noeud *n, instruction *instr) {
 
 	// Message d'erreur à fix
 	if (src->est_dossier && est_parent(src, dst))
-		exit_suppression_impossible(src->nom, dst->nom);
+		exit_action_impossible(instr,src->nom, dst->nom);
 
 	copier_noeud(dst, src, nom_dst);
 
@@ -219,9 +200,7 @@ noeud *cp(noeud *n, instruction *instr) {
 
 noeud *mv(noeud *n, instruction *instr) {
 	if (instr->nombre_arguments != 2) {
-		// Message d'erreur à fix
-		printf("mv attend exactement deux chemins en argument.");
-		exit(1);
+		exit_nombre_d_argument("mv", 2, instr->nombre_arguments);
 	}
 
 	flogf("exécution de mv %s %s\n", instr->arg1, instr->arg2);
@@ -229,11 +208,12 @@ noeud *mv(noeud *n, instruction *instr) {
 	chemin *chem_src = generer_chemin(instr->arg1);
 	chemin *chem_dst = generer_chemin(instr->arg2);
 	char *nom_dst = sans_dernier_noeud(chem_dst);
+	if(est_nom_valide(nom_dst))exit_nom_invalide(nom_dst);
 
 	noeud *src = aller_a(n, chem_src);
 	noeud *dst = aller_a(n, chem_dst);
 	// Message d'erreur à fix
-	if (src->est_dossier && est_parent(src, dst)) exit_suppression_impossible(src->nom, dst->nom);
+	if (src->est_dossier && est_parent(src, dst)) exit_action_impossible(instr,src->nom, dst->nom);
 
 	supprimer_elt(src->pere->fils, src);
 	src->pere = dst;
