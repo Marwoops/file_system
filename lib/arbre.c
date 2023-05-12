@@ -1,6 +1,7 @@
 #include <assert.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 
 #include "arbre.h"
 #include "liste.h"
@@ -56,8 +57,8 @@ noeud *creer_fichier(noeud *pere, char *nom) {
 
 
 noeud *creer_dossier(noeud *pere, char *nom, liste_noeud *fils) {
-	assert(pere  != NULL);
-	if(!est_nom_valide(nom))exit_nom_invalide(nom);
+	assert(pere != NULL);
+	if(!est_nom_valide(nom)) exit_nom_invalide(nom);
 
 	flogf("création du dossier %s dans %s\n", nom, pere->nom);
 

@@ -10,16 +10,19 @@
 
 liste_noeud *creer_liste() {
 	flog("création d'une liste");
-    liste_noeud *l=malloc(sizeof(liste_noeud));
+    liste_noeud *l = malloc(sizeof(liste_noeud));
 
     if (l == NULL) exit_malloc();
+
+	l->no = NULL;
+	l->succ = NULL;
 
     return l;
 }
 
 liste_noeud *creer_liste_avec_noeud(noeud* n) {
 	flog("création d'une liste avec un noeud");
-    if (n == NULL) return creer_liste ();
+    if (n == NULL) return creer_liste();
 
     liste_noeud *l = malloc(sizeof(liste_noeud));
 
@@ -47,7 +50,6 @@ void liberer_liste(liste_noeud *l) {
 
 	liberer_noeud(l->no);
 	liberer_liste(l->succ);
-	free(l->succ);
 	free(l);
 }
 
@@ -108,7 +110,7 @@ void print_liste(liste_noeud *l) {
 }
 
 size_t taille_liste(liste_noeud *l){
-	if (l == NULL) return 0;
+	if (l == NULL || l->no == NULL) return 0;
 	return 1 + taille_liste(l->succ);
 }
 
