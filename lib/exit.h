@@ -14,11 +14,9 @@ extern void exit_fichier_exisant(char*);
 extern void exit_nom_invalide(char *);
 extern void exit_commande_invalide(char*);
 extern void exit_pas_un_dossier(char*);
-extern void exit_action_impossible(instruction*, char*, char*);
-
+extern void exit_suppression_impossible(char* , char* );
+extern void exit_copie_impossible(char *, char *);
+extern void exit_deplacement_impossible(char *, char*);
 extern void exit_trop_d_arguments();
-extern void exit_argument_invalide(char *);
-extern void exit_suppression_impossible(char*,char*);
-extern void exit_copie_impossible();
-extern void exit_deplacement_impossible();
+
 #endif

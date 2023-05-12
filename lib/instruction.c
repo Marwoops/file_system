@@ -22,15 +22,16 @@ instruction *generer_instruction(char *_input) {
 	instruction *instr = malloc(sizeof(instruction));
 	if (instr == NULL) exit_malloc();
 
-	instr->cmd = get_commande(strtok(input, " "));
+	char* nom_cmd=strtok(input, " ");
+	instr->cmd = get_commande(nom_cmd);
 
-	if (instr->cmd == INVALIDE) exit_commande_invalide(instr->cmd);
+	if (instr->cmd == INVALIDE) exit_commande_invalide(nom_cmd);
 
 	instr->arg1 = strtok(NULL, " ");
 	instr->arg2 = strtok(NULL, " ");
 	instr->nombre_arguments = (instr->arg1 != NULL) + (instr->arg2 != NULL);
 
-	//if (strtok(NULL, " ") != NULL) exit_trop_d_arguments();
+	if (strtok(NULL, " ") != NULL) exit_trop_d_arguments(nom_cmd);
 
 	return instr;
 }
@@ -87,17 +88,6 @@ void afficher_instruction(instruction *instr) {
 	} */
 }
 
-bool est_nom_valide(char *input) {
-	size_t taille = strlen(input)-1;
-	if (taille > 100 || taille <= 0) exit_nom_invalide(input);
-
-	for (size_t t = 0; t < taille; ++t) {
-		if (!isalnum(input[t])) {
-			return false;
-		}
-	} 
-	return true;
-}
 
 noeud *ls(noeud *n, instruction *instr) {
 	if(instr->nombre_arguments>0) {
@@ -168,7 +158,10 @@ noeud *rm(noeud *n, instruction *instr) {
 	chemin *chem = generer_chemin(instr->arg1);
 	noeud *a_suppr = aller_a(n, chem);
 
-	if (a_suppr->est_dossier && est_parent(a_suppr, n)) exit_action_impossible(instr, n->nom, a_suppr->nom);
+	if (a_suppr->est_dossier && est_parent(a_suppr, n)) {
+		exit_suppression_impossible(n->nom, a_suppr->nom);
+	}
+
 	supprimer_elt(a_suppr->pere->fils, a_suppr);
 	liberer_noeud(a_suppr);
 
@@ -191,7 +184,7 @@ noeud *cp(noeud *n, instruction *instr) {
 
 	// Message d'erreur à fix
 	if (src->est_dossier && est_parent(src, dst))
-		exit_action_impossible(instr,src->nom, dst->nom);
+		exit_copie_impossible(src->nom, dst->nom);
 
 	copier_noeud(dst, src, nom_dst);
 
@@ -213,8 +206,9 @@ noeud *mv(noeud *n, instruction *instr) {
 	noeud *src = aller_a(n, chem_src);
 	noeud *dst = aller_a(n, chem_dst);
 	// Message d'erreur à fix
-	if (src->est_dossier && est_parent(src, dst)) exit_action_impossible(instr,src->nom, dst->nom);
-
+	if (src->est_dossier && est_parent(src, dst)) {
+		exit_deplacement_impossible(src->nom, dst->nom);
+	}
 	supprimer_elt(src->pere->fils, src);
 	src->pere = dst;
 	strcpy(src->nom, nom_dst);

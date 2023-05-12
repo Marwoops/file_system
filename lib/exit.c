@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <instruction.h>
+
 
 #include "exit.h"
 #include "debug.h"
@@ -13,10 +13,12 @@ void exit_malloc() {
 }
 
 void exit_nombre_d_argument(char *cmd, int attendus, int actuels) {
-	if(strcmp(cmd,"cd")==0){
+  if(strcmp(cmd,"cd")==0){
 		printf("\"%s\" attend au plus 1 arguments. %d donnés\n", cmd, actuels);
-	}
-  printf("\"%s\" attend %d arguments. %d donnés\n", cmd, attendus, actuels);
+  }
+  else {
+	printf("\"%s\" attend %d arguments. %d donnés\n", cmd, attendus, actuels);
+  }
   fermer_sortie_debug();
   exit(NB_ARGUMENT);
 }
@@ -54,29 +56,29 @@ void exit_pas_un_dossier(char *nom){
 	exit(PAS_UN_DOSSIER);
 }
 
-void exit_action_impossible(instruction *instr, char* src, char* dst){
-	switch (instr->cmd)
-	{
-	case 5 :
-		puts("Impossible de supprimer un dossier parent.");
-		printf("%s est un parent de %s\n",dst,src);
-		fermer_sortie_debug();
-		exit(SUPPRESSION_IMPOSSIBLE);
-		break;
-	case 6 :
-		puts("Impossible de copier un dossier parent dans un de ses dossier fils ou l'élément de copier est déja dans le dossier ciblé");
-		printf("%s est un parent de %s\n",dst,src);
-		fermer_sortie_debug();
-		exit(COPIE_IMPOSSIBLE);
-	case 7 :
-		puts("Impossible de déplcer un dossier parent dans un de ses dossier fils ou l'élément de déplacer est déja dans le dossier ciblé.");
-		printf("%s est un parent de %s\n",dst,src);
-		fermer_sortie_debug();
-		exit(DEPLACEMENT_IMPOSSIBLE);
-
-	default:
-		break;
-	}
+void exit_suppression_impossible(char* src, char* dst){
+	puts("Impossible de supprimer un dossier parent.");
+	printf("%s est un parent de %s\n",dst,src);
+	fermer_sortie_debug();
+	exit(SUPPRESSION_IMPOSSIBLE);
 }
 
+void exit_copie_impossible(char * src, char*dst){
+	puts("Impossible de copier un dossier parent dans un de ses dossier fils ou l'élément de copier est déja dans le dossier ciblé");
+	printf("%s est un parent de %s\n",dst,src);
+	fermer_sortie_debug();
+	exit(COPIE_IMPOSSIBLE);
+}
 
+void exit_deplacement_impossible(char * src, char*dst){
+	puts("Impossible de déplcer un dossier parent dans un de ses dossier fils ou l'élément de déplacer est déja dans le dossier ciblé.");
+	printf("%s est un parent de %s\n",dst,src);
+	fermer_sortie_debug();
+	exit(DEPLACEMENT_IMPOSSIBLE);
+}
+
+void exit_trop_d_arguments(char * cmd){
+	printf("La commande %s a trop d'argument.", cmd);
+	fermer_sortie_debug();
+	exit(NB_ARGUMENT);
+}

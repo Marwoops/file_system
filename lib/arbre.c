@@ -37,7 +37,7 @@ noeud  *creer_arbre() {
 
 noeud *creer_fichier(noeud *pere, char *nom) {
 	assert(pere != NULL);
-	if(est_nom_valide(nom))exit_nom_invalide(nom);
+	if(!est_nom_valide(nom))exit_nom_invalide(nom);
 
 	flogf("création du fichier %s dans %s\n", nom, pere->nom);
 
@@ -54,9 +54,10 @@ noeud *creer_fichier(noeud *pere, char *nom) {
 	return fichier;
 }
 
+
 noeud *creer_dossier(noeud *pere, char *nom, liste_noeud *fils) {
 	assert(pere  != NULL);
-	if(est_nom_valide(nom))exit_nom_invalide(nom);
+	if(!est_nom_valide(nom))exit_nom_invalide(nom);
 
 	flogf("création du dossier %s dans %s\n", nom, pere->nom);
 
@@ -180,7 +181,7 @@ noeud *aller_a(noeud *n, chemin *chem) {
 
     if (!suivant->est_dossier) {
 		if (chem->profondeur == 0) return suivant;
-		else exit_argument_invalide(suivant->nom);
+		else exit_pas_un_dossier(suivant->nom);
 	}
 
     flogf("déplacement vers %s\n", nom);
@@ -209,4 +210,18 @@ void print_noeud(noeud *n) {
 	affiche_liste(n->fils);
 
 	if (taille > 0) print_liste(n->fils);
+}
+
+bool est_nom_valide(char *input) {
+	size_t taille = strlen(input)-1;
+	if (taille > 100 || taille <= 0) {
+		exit_nom_invalide(input);
+	}
+
+	for (size_t t = 0; t < taille; ++t) {	
+		if (!isalnum(input[t])) {
+			return false;
+		}
+	} 
+	return true;
 }

@@ -34,4 +34,5 @@ extern char *sans_dernier_noeud(chemin*);
 extern noeud *aller_a(noeud *, chemin*);
 extern bool est_parent(noeud*, noeud*);
 extern void print_noeud(noeud*);
+extern bool est_nom_valide(char *);
 #endif

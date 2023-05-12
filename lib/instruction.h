@@ -26,7 +26,6 @@ extern noeud *traiter_instruction(noeud*, instruction*);
 extern commande get_commande(char*);
 extern void afficher_instruction(instruction*);
 extern char **decoupe_chemin(char*, bool*, size_t*);
-extern bool est_nom_valide(char*);
 
 extern noeud *ls(noeud*, instruction*);
 extern noeud *cd(noeud*, instruction*);

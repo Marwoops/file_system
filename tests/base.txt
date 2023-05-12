@@ -21,7 +21,9 @@ ls
 cd pipi
 ls
 cd ../caca
+pwd
 ls
+cd uiaz"é"'"#" 
 cd ..
 ls
 cd ..
