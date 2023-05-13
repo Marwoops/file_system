@@ -30,8 +30,8 @@ int main(int argc, char* argv[]) {
 	noeud* arbre = creer_arbre();
 
 	size_t t = 1024;
-	char* ligne = malloc(t*sizeof(char));
-	instruction* instr = NULL;
+	char *ligne = NULL;
+	instruction *instr = NULL;
 	int numero_ligne = 0;
 
 	while ((getline(&ligne, &t, fichier_instructions)) != -1) {
@@ -40,9 +40,12 @@ int main(int argc, char* argv[]) {
 		printf("%s", ligne);
 		instr = generer_instruction(ligne);
 		arbre = traiter_instruction(arbre, instr);
+		free(ligne);
+		free(instr);
 		numero_ligne++;
 	}
 
+	liberer_noeud(arbre->racine);
 	fermer_sortie_debug();
 	fclose(fichier_instructions);
 

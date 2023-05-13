@@ -11,14 +11,23 @@
 struct chemin {
 	bool est_absolu;
 	size_t profondeur;
-	char** noeuds;
+	size_t curseur;
+	char **noeuds;
 };
 
 chemin *generer_chemin(char *noeuds) {
     chemin *chem = malloc(sizeof(chemin));
     if (chem == NULL) exit_malloc();
     chem->noeuds = decoupe_chemin(noeuds, &chem->est_absolu, &chem->profondeur);
+	chem->curseur = 0;
     return chem;
+}
+
+void liberer_chemin(chemin *chem) {
+	assert(chem != NULL);
+
+	free(chem->noeuds);
+	free(chem);
 }
 
 noeud  *creer_arbre() {
@@ -101,9 +110,7 @@ void liberer_noeud(noeud *n) {
 
 	flogf("libération de %s\n", n->nom);
 
-	if (n->est_dossier) {
-		liberer_liste(n->fils);
-	}
+	if (n->est_dossier) liberer_liste(n->fils);
 
 	free(n->nom);
 	free(n);
@@ -140,9 +147,9 @@ char **decoupe_chemin(char *chemin, bool *est_absolu, size_t *taille) {
     *taille = nb_noeuds;
 
     char **chemin_decoupe = malloc((nb_noeuds+1) * sizeof(char*));
-    *chemin_decoupe = strdup(strtok(chemin, "/"));
+    *chemin_decoupe = strtok(chemin, "/");
     for (size_t i = 1; i < nb_noeuds; ++i)
-        *(chemin_decoupe + i) = strdup(strtok(NULL, "/"));
+        *(chemin_decoupe + i) = strtok(NULL, "/");
 
     return chemin_decoupe;
 }
@@ -163,11 +170,10 @@ noeud *aller_a(noeud *n, chemin *chem) {
         return aller_a(n->racine, chem);
     }
 
-    if (chem->profondeur == 0) return n;
+    if (chem->curseur == chem->profondeur) return n;
 
-    char *nom = *(chem->noeuds);
-    chem->profondeur -= 1;
-	chem->noeuds = chem->noeuds + 1;
+    char *nom = *(chem->noeuds + chem->curseur);
+    ++chem->curseur;
 
     if ((strcmp(nom, "..") == 0) && n->pere != NULL) {
 	   flogf("déplacement vers le pere de %s\n", nom);
@@ -181,7 +187,7 @@ noeud *aller_a(noeud *n, chemin *chem) {
     if (suivant == NULL) exit_argument_null(nom);
 
     if (!suivant->est_dossier) {
-		if (chem->profondeur == 0) return suivant;
+		if (chem->curseur == chem->profondeur) return suivant;
 		else exit_pas_un_dossier(suivant->nom);
 	}
 
@@ -214,15 +220,13 @@ void print_noeud(noeud *n) {
 }
 
 bool est_nom_valide(char *input) {
-	size_t taille = strlen(input)-1;
-	if (taille > 100 || taille <= 0) {
-		exit_nom_invalide(input);
-	}
+	size_t taille = strlen(input) - 1;
+	if (taille > 100 || taille <= 0) exit_nom_invalide(input);
 
-	for (size_t t = 0; t < taille; ++t) {	
+	for (size_t t = 0; t < taille; ++t) {
 		if (!isalnum(input[t])) {
 			return false;
 		}
-	} 
+	}
 	return true;
 }

@@ -7,8 +7,8 @@
 struct noeud {
 	bool est_dossier;
 	char *nom;
-	struct noeud* pere;
-	struct noeud* racine;
+	struct noeud *pere;
+	struct noeud *racine;
 	struct liste_noeud *fils;
 };
 
@@ -17,13 +17,14 @@ typedef struct liste_noeud liste_noeud;
 typedef struct chemin chemin;
 
 extern chemin *generer_chemin(char*);
+extern void liberer_chemin(chemin*);
 extern noeud *creer_arbre();
 extern noeud *creer_fichier(noeud*, char*);
 extern noeud *creer_dossier(noeud*, char*, liste_noeud*);
 extern noeud *copier_noeud(noeud*, noeud*, char*);
 extern void afficher_chemin(noeud*);
 
-extern void liberer_noeud(noeud *n);
+extern void liberer_noeud(noeud *);
 extern void ajouter_noeud(noeud*, noeud*);
 extern void supprimer_noeud(noeud*, chemin*, noeud*);
 extern void supprimer_noeud_par_nom(noeud*, chemin*, char*);

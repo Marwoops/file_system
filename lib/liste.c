@@ -34,15 +34,11 @@ liste_noeud *creer_liste_avec_noeud(noeud* n) {
     return l;
 }
 
-liste_noeud *copier_liste(noeud *pere, liste_noeud *l) {
-	if (l == NULL) return NULL;
+void copier_liste(noeud *pere, liste_noeud *l) {
+	if (l == NULL) return;
 
-	liste_noeud *copie = creer_liste();
-	//printf("sous noeud : %s\n", l->no->nom);
-	copie->no = copier_noeud(pere, l->no, l->no->nom);
-	copie->succ = copier_liste(pere, l->succ);
-
-	return copie;
+	copier_noeud(pere, l->no, l->no->nom);
+	copier_liste(pere, l->succ);
 }
 
 void liberer_liste(liste_noeud *l) {

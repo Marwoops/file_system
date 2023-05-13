@@ -5,6 +5,7 @@
 #include <string.h>
 #include <ctype.h>
 
+#include "arbre.h"
 #include "instruction.h"
 #include "liste.h"
 #include "exit.h"
@@ -109,15 +110,16 @@ noeud *cd(noeud *n, instruction *instr) {
 	}
 
 	chemin *chem = generer_chemin(instr->arg1);
-	noeud *dst = aller_a(n,chem);
+	noeud *dst = aller_a(n, chem);
 	if (!dst->est_dossier) exit_pas_un_dossier(dst->nom);
 
+	liberer_chemin(chem);
 	return dst;
 }
 
 noeud *pwd (noeud *n, instruction *instr) {
 	if (instr->nombre_arguments > 0) {
-		exit_nombre_d_argument("pwd", 0, instr->nombre_arguments);	
+		exit_nombre_d_argument("pwd", 0, instr->nombre_arguments);
 	}
 	flog("exécution de pwd");
 	afficher_chemin(n);
@@ -131,7 +133,7 @@ noeud *mkdir(noeud *n, instruction *instr) {
 	}
 
 	flogf("exécution de mkdir %s\n", instr->arg1);
-	liste_noeud *l =creer_liste();
+	liste_noeud *l = creer_liste();
 	creer_dossier(n, instr->arg1, l);
 
 	return n;
@@ -164,6 +166,7 @@ noeud *rm(noeud *n, instruction *instr) {
 
 	supprimer_elt(a_suppr->pere->fils, a_suppr);
 	liberer_noeud(a_suppr);
+	liberer_chemin(chem);
 
 	return n;
 }
@@ -187,6 +190,9 @@ noeud *cp(noeud *n, instruction *instr) {
 		exit_copie_impossible(src->nom, dst->nom);
 
 	copier_noeud(dst, src, nom_dst);
+	liberer_chemin(chem_src);
+	liberer_chemin(chem_dst);
+	free(nom_dst);
 
 	return n;
 }
@@ -214,11 +220,15 @@ noeud *mv(noeud *n, instruction *instr) {
 	strcpy(src->nom, nom_dst);
 	ajouter_elt(dst->fils, src);
 
+	liberer_chemin(chem_src);
+	liberer_chemin(chem_dst);
+	//free(nom_dst);
+
 	return n;
 }
 
 noeud *print(noeud *n, instruction *instr) {
-		if (instr->nombre_arguments > 0) {
+	if (instr->nombre_arguments > 0) {
 		// Message d'erreur à fix
 		printf("print n'attend aucun argument.");
 		exit(1);

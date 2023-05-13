@@ -15,7 +15,7 @@ typedef struct noeud noeud;
 
 extern liste_noeud *creer_liste();
 extern liste_noeud *creer_liste_avec_noeud(noeud*);
-extern liste_noeud *copier_liste(noeud*, liste_noeud*);
+extern void copier_liste(noeud*, liste_noeud*);
 extern void liberer_liste(liste_noeud*);
 
 extern size_t taille_liste(liste_noeud*);
