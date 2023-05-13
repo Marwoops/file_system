@@ -40,11 +40,12 @@ int main(int argc, char* argv[]) {
 		printf("%s", ligne);
 		instr = generer_instruction(ligne);
 		arbre = traiter_instruction(arbre, instr);
-		free(ligne);
+		//free(ligne);
 		free(instr);
 		numero_ligne++;
 	}
 
+	free(ligne);
 	liberer_noeud(arbre->racine);
 	fermer_sortie_debug();
 	fclose(fichier_instructions);

@@ -192,7 +192,6 @@ noeud *cp(noeud *n, instruction *instr) {
 	copier_noeud(dst, src, nom_dst);
 	liberer_chemin(chem_src);
 	liberer_chemin(chem_dst);
-	free(nom_dst);
 
 	return n;
 }
