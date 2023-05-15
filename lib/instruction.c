@@ -16,6 +16,22 @@ void afficher_prompt(noeud *n) {
 	printf(" > ");
 }
 
+bool obtenir_ligne(char **ligne, size_t *MAX_LENGTH, FILE *fichier) {
+	if (feof(fichier)) return true;
+
+	fgets(*ligne, *MAX_LENGTH, fichier);
+
+	while (strlen(*ligne) + 1 == *MAX_LENGTH) {
+		*MAX_LENGTH += 256;
+		*ligne = realloc(*ligne, *MAX_LENGTH);
+		char *tampon = malloc(256 * sizeof(char));
+		fgets(tampon, 256, fichier);
+		strcat(*ligne, tampon);
+	}
+
+	return false;
+}
+
 instruction *generer_instruction(char *_input) {
 	flog("génération de l'instruction");
 	char *input = strtok(_input, "\n");

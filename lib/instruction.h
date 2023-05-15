@@ -21,6 +21,7 @@ struct instruction {
 typedef struct instruction instruction;
 
 extern void afficher_prompt(noeud *n);
+extern bool obtenir_ligne(char**, size_t*, FILE*);
 extern instruction *generer_instruction(char*);
 extern noeud *traiter_instruction(noeud*, instruction*);
 extern commande get_commande(char*);

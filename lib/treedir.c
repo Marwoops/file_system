@@ -29,12 +29,12 @@ int main(int argc, char* argv[]) {
 
 	noeud* arbre = creer_arbre();
 
-	size_t t = 1024;
-	char *ligne = NULL;
+	size_t t = 256;
+	char *ligne = malloc(t * sizeof(char));
 	instruction *instr = NULL;
 	int numero_ligne = 0;
 
-	while ((getline(&ligne, &t, fichier_instructions)) != -1) {
+	while (!obtenir_ligne(&ligne, &t, fichier_instructions)) {
 		flogf("lecture de l'instruction ligne %d\n", numero_ligne);
 		afficher_prompt(arbre);
 		printf("%s", ligne);
