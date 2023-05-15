@@ -16,9 +16,8 @@ void afficher_prompt(noeud *n) {
 	printf(" > ");
 }
 
-instruction *generer_instruction(char *_input) {
+instruction *generer_instruction(char *input) {
 	flog("génération de l'instruction");
-	char *input = strtok(_input, "\n");
 
 	instruction *instr = malloc(sizeof(instruction));
 	if (instr == NULL) exit_malloc();
@@ -91,21 +90,22 @@ void afficher_instruction(instruction *instr) {
 
 
 noeud *ls(noeud *n, instruction *instr) {
-	if(instr->nombre_arguments>0) {
+	if(instr->nombre_arguments > 0) {
 		exit_nombre_d_argument("ls", 0, instr->nombre_arguments);
 	}
+
 	flog("exécution de ls");
 	affiche_liste(n->fils);
 	return n;
 }
 
 noeud *cd(noeud *n, instruction *instr) {
-	if (instr->nombre_arguments>1) {
+	if (instr->nombre_arguments > 1) {
 		exit_nombre_d_argument("cd", 0, instr->nombre_arguments);
 	}
 
 	flog("exécution de cd");
-	if(instr->nombre_arguments==0){
+	if(instr->nombre_arguments == 0){
 		return n->racine;
 	}
 
@@ -121,6 +121,7 @@ noeud *pwd (noeud *n, instruction *instr) {
 	if (instr->nombre_arguments > 0) {
 		exit_nombre_d_argument("pwd", 0, instr->nombre_arguments);
 	}
+
 	flog("exécution de pwd");
 	afficher_chemin(n);
 	puts("");
@@ -128,7 +129,7 @@ noeud *pwd (noeud *n, instruction *instr) {
 }
 
 noeud *mkdir(noeud *n, instruction *instr) {
-	if (instr->nombre_arguments!=1) {
+	if (instr->nombre_arguments != 1) {
 		exit_nombre_d_argument("mkdir", 1, instr->nombre_arguments);
 	}
 
@@ -140,7 +141,7 @@ noeud *mkdir(noeud *n, instruction *instr) {
 }
 
 noeud *touch(noeud *n, instruction *instr) {
-	if (instr->nombre_arguments!=1) {
+	if (instr->nombre_arguments != 1) {
 		exit_nombre_d_argument("touch", 1, instr->nombre_arguments);
 	}
 
@@ -185,7 +186,6 @@ noeud *cp(noeud *n, instruction *instr) {
 	noeud *src = aller_a(n, chem_src);
 	noeud *dst = aller_a(n, chem_dst);
 
-	// Message d'erreur à fix
 	if (src->est_dossier && est_parent(src, dst))
 		exit_copie_impossible(src->nom, dst->nom);
 
@@ -210,7 +210,7 @@ noeud *mv(noeud *n, instruction *instr) {
 
 	noeud *src = aller_a(n, chem_src);
 	noeud *dst = aller_a(n, chem_dst);
-	// Message d'erreur à fix
+
 	if (src->est_dossier && est_parent(src, dst)) {
 		exit_deplacement_impossible(src->nom, dst->nom);
 	}
@@ -221,7 +221,6 @@ noeud *mv(noeud *n, instruction *instr) {
 
 	liberer_chemin(chem_src);
 	liberer_chemin(chem_dst);
-	//free(nom_dst);
 
 	return n;
 }
