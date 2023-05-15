@@ -121,7 +121,7 @@ void supprimer_elt(liste_noeud* l, noeud* n) {
 		if (l->succ == NULL) {
 			l->no = NULL;
 		} else {
-			noeud *a_suppr=l->succ;
+			liste_noeud *a_suppr = l->succ;
 			l->no = l->succ->no;
 			l->succ = l->succ->succ;
 			free(a_suppr);
@@ -131,7 +131,7 @@ void supprimer_elt(liste_noeud* l, noeud* n) {
 
 	while(l->succ != NULL) {
 		if (l->succ->no == n) {
-			noeud *a_suppr=l->succ;
+			liste_noeud *a_suppr = l->succ;
 			l->succ = l->succ->succ;
 			free(a_suppr);
 			return;
