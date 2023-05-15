@@ -70,15 +70,12 @@ void ajouter_elt(liste_noeud *l, noeud *n) {
 
 	while(l->succ != NULL) {
 		if (strcmp(l->no->nom, n->nom) == 0) {
-			// Message d'erreur à fix
-			printf("le nom %s existe déjà dans la liste\n", n->nom);
-			exit(1);
+			exit_fichier_existant(n->nom);
 		}
 		l = l->succ;
 	}
 	if (strcmp(l->no->nom, n->nom) == 0) {
-		printf("le nom %s existe déjà dans la liste\n", n->nom);
-		exit(1);
+		exit_fichier_existant(n->nom);
 	}
 	l->succ = creer_liste_avec_noeud(n);
 }
@@ -138,6 +135,5 @@ void supprimer_elt(liste_noeud* l, noeud* n) {
 		}
 		l = l->succ;
 	}
-	printf("le noeud %s n'est pas présent dans la liste\n", n->nom);
-	exit(1);
+	exit_argument_null(n->nom);
 }

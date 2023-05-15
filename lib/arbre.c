@@ -183,7 +183,6 @@ noeud *aller_a(noeud *n, chemin *chem) {
 	if (strcmp(nom, ".") == 0) return aller_a(n,chem);
 
     noeud *suivant = get_elt(n->fils, nom);
-	// Message d'erreur à fix
     if (suivant == NULL) exit_argument_null(nom);
 
     if (!suivant->est_dossier) {

@@ -228,9 +228,7 @@ noeud *mv(noeud *n, instruction *instr) {
 
 noeud *print(noeud *n, instruction *instr) {
 	if (instr->nombre_arguments > 0) {
-		// Message d'erreur à fix
-		printf("print n'attend aucun argument.");
-		exit(1);
+		exit_nombre_d_argument("print", 0,instr->nombre_arguments);
 	}
 	print_noeud(n->racine);
 	return n;
