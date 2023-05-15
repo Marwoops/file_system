@@ -29,6 +29,9 @@ bool obtenir_ligne(char **ligne, size_t *MAX_LENGTH, FILE *fichier) {
 		strcat(*ligne, tampon);
 	}
 
+	// on retire le saut de ligne
+	char *last = *ligne + strlen(*ligne)-1;
+	if (*last == '\n') *last = '\0';
 	return false;
 }
 
