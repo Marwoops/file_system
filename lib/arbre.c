@@ -15,9 +15,18 @@ struct chemin {
 	char **noeuds;
 };
 
+char *dupliquer_chaine(char *s) {
+	assert(s != NULL);
+
+	char *copie = malloc((strlen(s) + 1) * sizeof(char));
+	strcpy(copie, s);
+	return copie;
+}
+
 chemin *generer_chemin(char *noeuds) {
     chemin *chem = malloc(sizeof(chemin));
     if (chem == NULL) exit_malloc();
+
     chem->noeuds = decoupe_chemin(noeuds, &chem->est_absolu, &chem->profondeur);
 	chem->curseur = 0;
     return chem;
@@ -30,7 +39,7 @@ void liberer_chemin(chemin *chem) {
 	free(chem);
 }
 
-noeud  *creer_arbre() {
+noeud *creer_arbre() {
 	flog("initialisation de l'arbre");
 	noeud* racine = malloc(sizeof(noeud));
 
@@ -40,14 +49,14 @@ noeud  *creer_arbre() {
 	racine->racine = racine;
 	racine->fils = creer_liste();
 	racine->pere = racine;
-	racine->nom = strdup("");
+	racine->nom = dupliquer_chaine("");
 
 	return racine;
 }
 
 noeud *creer_fichier(noeud *pere, char *nom) {
 	assert(pere != NULL);
-	if(!est_nom_valide(nom))exit_nom_invalide(nom);
+	if(!est_nom_valide(nom)) exit_nom_invalide(nom);
 
 	flogf("création du fichier %s dans %s\n", nom, pere->nom);
 
@@ -58,7 +67,7 @@ noeud *creer_fichier(noeud *pere, char *nom) {
 	fichier->est_dossier = false;
 	fichier->racine = pere->racine;
 	fichier->pere = pere;
-	fichier->nom = strdup(nom);
+	fichier->nom = dupliquer_chaine(nom);
 	ajouter_elt(pere->fils, fichier);
 
 	return fichier;
@@ -79,7 +88,7 @@ noeud *creer_dossier(noeud *pere, char *nom, liste_noeud *fils) {
 	dossier->racine = pere->racine;
 	dossier->fils = fils;
 	dossier->pere = pere;
-	dossier->nom = strdup(nom);
+	dossier->nom = dupliquer_chaine(nom);
 	ajouter_elt(pere->fils, dossier);
 
 	return dossier;
@@ -89,6 +98,7 @@ noeud *copier_noeud(noeud* pere, noeud *n, char *nom) {
 	assert(pere != NULL);
 	if (n == NULL) return NULL;
 
+	flogf("copie de %s en %s dans %s\n", n->nom, nom, pere->nom);
 	if(n->est_dossier) {
 		noeud *copie = creer_dossier(pere, nom, creer_liste());
 		copier_liste(copie, n->fils);
@@ -107,7 +117,6 @@ void afficher_chemin(noeud *n) {
 
 void liberer_noeud(noeud *n) {
 	if (n == NULL) return;
-
 	flogf("libération de %s\n", n->nom);
 
 	if (n->est_dossier) liberer_liste(n->fils);
@@ -116,10 +125,12 @@ void liberer_noeud(noeud *n) {
 	free(n);
 }
 
-void ajouter_noeud(noeud *racine, noeud *n) {
-	assert(racine != NULL);
+void ajouter_noeud(noeud *pere, noeud *n) {
+	assert(pere != NULL);
+	assert(n != NULL);
 
-	ajouter_elt(racine->fils, n);
+	flogf("ajout de %s dans %s\n", n->nom, pere->nom);
+	ajouter_elt(pere->fils, n);
 }
 
 char **decoupe_chemin(char *chemin, bool *est_absolu, size_t *taille) {
@@ -176,7 +187,7 @@ noeud *aller_a(noeud *n, chemin *chem) {
     ++chem->curseur;
 
     if ((strcmp(nom, "..") == 0) && n->pere != NULL) {
-	   flogf("déplacement vers le pere de %s\n", nom);
+	   flogf("déplacement vers le pere de %s (%s)\n", nom, n->pere->nom);
        return aller_a(n->pere, chem);
 	}
 
@@ -203,6 +214,7 @@ bool est_parent(noeud *src, noeud *dst) {
 
 void print_noeud(noeud *n) {
 	assert(n != NULL);
+	flogf("affichage du noeud %s\n", n->nom);
 
 	if (!n->est_dossier) {
 		printf("Noeud %s (F), pere : %s, 0 fils\n", n->nom, n->pere->nom);
@@ -210,6 +222,7 @@ void print_noeud(noeud *n) {
 	}
 
 	size_t taille = taille_liste(n->fils);
+
 	if (n == n->racine) printf("Noeud / (D)");
 	else printf("Noeud %s (D), pere : %s", n->nom, n->pere->nom);
 
@@ -221,6 +234,7 @@ void print_noeud(noeud *n) {
 
 bool est_nom_valide(char *input) {
 	size_t taille = strlen(input) - 1;
+
 	if (taille > 100 || taille <= 0) exit_nom_invalide(input);
 
 	for (size_t t = 0; t < taille; ++t) {

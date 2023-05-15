@@ -10,6 +10,7 @@
 
 liste_noeud *creer_liste() {
 	flog("création d'une liste");
+
     liste_noeud *l = malloc(sizeof(liste_noeud));
 
     if (l == NULL) exit_malloc();
@@ -20,10 +21,10 @@ liste_noeud *creer_liste() {
     return l;
 }
 
-liste_noeud *creer_liste_avec_noeud(noeud* n) {
-	flog("création d'une liste avec un noeud");
+liste_noeud *creer_liste_avec_noeud(noeud *n) {
     if (n == NULL) return creer_liste();
 
+	flogf("création d'une liste à partir du noeud %s\n", n->nom);
     liste_noeud *l = malloc(sizeof(liste_noeud));
 
 	if (l == NULL) exit_malloc();
@@ -49,8 +50,9 @@ void liberer_liste(liste_noeud *l) {
 	free(l);
 }
 
-noeud *get_elt(liste_noeud* l, char *nom) {
+noeud *get_elt(liste_noeud *l, char *nom) {
 	assert(l != NULL);
+
 	if (l->no == NULL) return NULL;
     if(strcmp(nom,l->no->nom) == 0) return l->no;
     if(l->succ == NULL) return NULL;
@@ -60,8 +62,6 @@ noeud *get_elt(liste_noeud* l, char *nom) {
 void ajouter_elt(liste_noeud *l, noeud *n) {
 	assert(l != NULL);
 	assert(n != NULL);
-
-	flogf("ajout de %s élément à la liste\n", n->nom);
 
 	if (l->no == NULL) {
 		l->no = n;
@@ -112,6 +112,7 @@ size_t taille_liste(liste_noeud *l){
 
 void supprimer_elt(liste_noeud* l, noeud* n) {
 	assert(n != NULL);
+	flogf("suppression du noeud %s de la liste\n", n->nom);
 
 	if (l == NULL || l->no == NULL) {
 		exit_argument_null(l->no->nom);
