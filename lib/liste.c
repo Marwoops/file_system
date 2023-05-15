@@ -115,7 +115,7 @@ void supprimer_elt(liste_noeud* l, noeud* n) {
 	flogf("suppression du noeud %s de la liste\n", n->nom);
 
 	if (l == NULL || l->no == NULL) {
-		exit_argument_null(l->no->nom);
+		exit_noeud_null(l->no->nom);
 	}
 
     if  (n == l->no) {

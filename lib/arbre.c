@@ -195,7 +195,7 @@ noeud *aller_a(noeud *n, chemin *chem) {
 
     noeud *suivant = get_elt(n->fils, nom);
 	// Message d'erreur à fix
-    if (suivant == NULL) exit_argument_null(nom);
+    if (suivant == NULL) exit_noeud_null(nom);
 
     if (!suivant->est_dossier) {
 		if (chem->curseur == chem->profondeur) return suivant;

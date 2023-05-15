@@ -31,7 +31,7 @@ bool obtenir_ligne(char **ligne, size_t *MAX_LENGTH, FILE *fichier) {
 	return false;
 }
 
-int main(int argc, char* argv[]) {
+int main(int argc, char *argv[]) {
 	if (argc == 3 && strcmp("--debug", argv[2]) == 0) {
 		FILE *sortie = fopen("log", "w");
 		set_sortie_debug(sortie);
@@ -42,13 +42,13 @@ int main(int argc, char* argv[]) {
 	}
 
 	flog("ouverture du fichier instruction");
-	FILE* fichier_instructions = fopen(argv[1], "r");
+	FILE *fichier_instructions = fopen(argv[1], "r");
 
 	if (fichier_instructions == NULL) {
 		puts("Impossible de lire le fichier passé en argument.");
 		exit(1);
 	}
-
+	set_entree_instruction(fichier_instructions);
 	noeud* arbre = creer_arbre();
 
 	size_t t = 256;
