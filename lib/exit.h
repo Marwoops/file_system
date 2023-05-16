@@ -10,7 +10,7 @@ COPIE_IMPOSSIBLE, DEPLACEMENT_IMPOSSIBLE};
 extern void exit_malloc(void);
 extern void exit_nombre_d_argument(char*, int, int);
 extern void exit_noeud_null(char*);
-extern void exit_noeud_exisant(char*);
+extern void exit_noeud_existant(char*);
 extern void exit_nom_invalide(char*);
 extern void exit_commande_invalide(char*);
 extern void exit_pas_un_dossier(char*);

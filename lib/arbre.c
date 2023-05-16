@@ -194,12 +194,8 @@ noeud *aller_a(noeud *n, chemin *chem) {
 	if (strcmp(nom, ".") == 0) return aller_a(n,chem);
 
     noeud *suivant = get_elt(n->fils, nom);
-<<<<<<< HEAD
-    if (suivant == NULL) exit_argument_null(nom);
-=======
-	// Message d'erreur à fix
+
     if (suivant == NULL) exit_noeud_null(nom);
->>>>>>> 954a49887934f4e205111b0be97a16359f999eff
 
     if (!suivant->est_dossier) {
 		if (chem->curseur == chem->profondeur) return suivant;

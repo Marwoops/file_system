@@ -70,12 +70,12 @@ void ajouter_elt(liste_noeud *l, noeud *n) {
 
 	while(l->succ != NULL) {
 		if (strcmp(l->no->nom, n->nom) == 0) {
-			exit_fichier_existant(n->nom);
+			exit_noeud_existant(n->nom);
 		}
 		l = l->succ;
 	}
 	if (strcmp(l->no->nom, n->nom) == 0) {
-		exit_fichier_existant(n->nom);
+		exit_noeud_existant(n->nom);
 	}
 	l->succ = creer_liste_avec_noeud(n);
 }
@@ -136,5 +136,5 @@ void supprimer_elt(liste_noeud* l, noeud* n) {
 		}
 		l = l->succ;
 	}
-	exit_argument_null(n->nom);
+	exit_noeud_null(n->nom);
 }
