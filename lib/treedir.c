@@ -28,6 +28,9 @@ bool obtenir_ligne(char **ligne, size_t *MAX_LENGTH, FILE *fichier) {
 	// on retire le saut de ligne
 	char *last = *ligne + strlen(*ligne)-1;
 	if (*last == '\n') *last = '\0';
+
+	// on saute les lignes vides
+	if (**ligne == '\0') return obtenir_ligne(ligne, MAX_LENGTH, fichier);
 	return false;
 }
 
