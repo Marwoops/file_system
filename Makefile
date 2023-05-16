@@ -14,8 +14,5 @@ clean :
 %.o: lib/%.c $(DEPS)
 	$(CC) $(CFLAGS) -c $<
 
-main : main.o arbre.o liste.o instruction.o debug.o exit.o
-	$(CC) $(CFLAGS) -o $@ $^
-
 treedir : treedir.o arbre.o liste.o instruction.o debug.o exit.o
 	$(CC) $(CFLAGS) -o $@ $^
