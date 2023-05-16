@@ -69,6 +69,7 @@ int main(int argc, char *argv[]) {
 		free(instr);
 	}
 
+	flogf("\nfin de lecture des instructions\nlibération de la mémoire\n");
 	free(ligne);
 	liberer_noeud(arbre->racine);
 	fermer_sortie_debug();
