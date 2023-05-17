@@ -156,7 +156,7 @@ noeud *rm(noeud *n, instruction *instr) {
 		exit_nombre_d_argument("rm", 1, instr->nombre_arguments);
 	}
 
-	flogf("exécution de rm %s %s\n", instr->arg1);
+	flogf("exécution de rm %s\n", instr->arg1);
 
 	chemin *chem = generer_chemin(instr->arg1);
 	noeud *a_suppr = aller_a(n, chem);
