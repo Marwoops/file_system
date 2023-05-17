@@ -10,21 +10,25 @@
 #include "exit.h"
 
 bool obtenir_ligne(char **ligne, size_t *MAX_LENGTH, FILE *fichier) {
+	fgets(*ligne, *MAX_LENGTH, fichier);
 	if (feof(fichier)) return true;
 
-	fgets(*ligne, *MAX_LENGTH, fichier);
-	char *tampon = malloc(256 * sizeof(char));
+	//fgets(*ligne, *MAX_LENGTH, fichier);
+	char *tampon = malloc(257 * sizeof(char));
 	if (tampon == NULL) exit_malloc();
 
 	while (strlen(*ligne) + 1 == *MAX_LENGTH) {
 		*MAX_LENGTH += 256;
 		*ligne = realloc(*ligne, *MAX_LENGTH);
-		if (ligne == NULL) exit_malloc();
-		fgets(tampon, 256, fichier);
+		if (*ligne == NULL) exit_malloc();
+		fgets(tampon, 257, fichier);
 		strcat(*ligne, tampon);
 	}
 
 	free(tampon);
+	//printf("On vient de lire %s|\n", *ligne);
+	//printf("%lu\n", strlen(*ligne));
+	//printf("aaaa %d\n", *(*ligne + strlen(*ligne)));
 	// on retire le saut de ligne
 	char *last = *ligne + strlen(*ligne)-1;
 	if (*last == '\n') *last = '\0';
@@ -61,7 +65,7 @@ int main(int argc, char *argv[]) {
 
 	while (!obtenir_ligne(&ligne, &t, fichier_instructions)) {
 		++numero_ligne;
-		flogf("\nlecture de l'instruction ligne %d\n", numero_ligne);
+		flogf("\nlecture de l'instruction ligne %d:\n%s\n", numero_ligne, ligne);
 		afficher_prompt(arbre);
 		printf("%s\n", ligne);
 		instr = generer_instruction(ligne);
