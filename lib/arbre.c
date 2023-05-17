@@ -233,7 +233,7 @@ void print_noeud(noeud *n) {
 }
 
 bool est_nom_valide(char *input) {
-	size_t taille = strlen(input) - 1;
+	size_t taille = strlen(input);
 
 	if (taille > 100 || taille <= 0) exit_nom_invalide(input);
 
