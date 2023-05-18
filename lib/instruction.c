@@ -10,10 +10,43 @@
 #include "liste.h"
 #include "exit.h"
 
+enum commande {LS, CD, PWD, MKDIR, TOUCH, RM, CP, MV, PRINT, INVALIDE};
+typedef enum commande commande;
+
+struct instruction {
+	commande cmd;
+	unsigned nombre_arguments;
+	char *arg1;
+	char *arg2;
+};
+
+static noeud *ls(noeud*, instruction*);
+static noeud *cd(noeud*, instruction*);
+static noeud *pwd(noeud*, instruction*);
+static noeud *mkdir(noeud*, instruction*);
+static noeud *touch(noeud*, instruction*);
+static noeud *rm(noeud*, instruction*);
+static noeud *cp(noeud*, instruction*);
+static noeud *mv(noeud*, instruction*);
+static noeud *print(noeud*, instruction*);
+
 void afficher_prompt(noeud *n) {
 	printf("melyo@");
 	afficher_chemin(n);
 	printf(" > ");
+}
+
+static commande get_commande(char *input) {
+	if (strcmp(input, "ls") == 0) return LS;
+	if (strcmp(input, "cd") == 0) return CD;
+	if (strcmp(input, "pwd") == 0) return PWD;
+	if (strcmp(input, "mkdir") == 0) return MKDIR;
+	if (strcmp(input, "touch") == 0) return TOUCH;
+	if (strcmp(input, "rm") == 0) return RM;
+	if (strcmp(input, "cp") == 0) return CP;
+	if (strcmp(input, "mv") == 0) return MV;
+	if (strcmp(input, "print") == 0) return PRINT;
+	return INVALIDE;
 }
 
 instruction *generer_instruction(char *input) {
@@ -22,7 +55,7 @@ instruction *generer_instruction(char *input) {
 	instruction *instr = malloc(sizeof(instruction));
 	if (instr == NULL) exit_malloc();
 
-	char* nom_cmd=strtok(input, " ");
+	char* nom_cmd = strtok(input, " ");
 	instr->cmd = get_commande(nom_cmd);
 
 	if (instr->cmd == INVALIDE) exit_commande_invalide(nom_cmd);
@@ -55,59 +88,22 @@ noeud *traiter_instruction(noeud *n, instruction *instr) {
 	}
 }
 
-commande get_commande(char *input) {
-	if (strcmp(input, "ls") == 0) return LS;
-	if (strcmp(input, "cd") == 0) return CD;
-	if (strcmp(input, "pwd") == 0) return PWD;
-	if (strcmp(input, "mkdir") == 0) return MKDIR;
-	if (strcmp(input, "touch") == 0) return TOUCH;
-	if (strcmp(input, "rm") == 0) return RM;
-	if (strcmp(input, "cp") == 0) return CP;
-	if (strcmp(input, "mv") == 0) return MV;
-	if (strcmp(input, "print") == 0) return PRINT;
-	return INVALIDE;
-}
-
-void afficher_instruction(instruction *instr) {
-	puts("instruction :");
-	printf("cmd: %d\n", instr->cmd);
-	printf("nombre_arguments: %u\n", instr->nombre_arguments);
-	if (instr->arg1 != NULL) printf("arg1 : %s\n", instr->arg1);
-	if (instr->arg2 != NULL) printf("arg2 : %s\n", instr->arg2);
-	/*switch(instr->cmd) {
-		case LS: puts("ls"); break;
-		case CD: puts("cd"); break;
-		case PWD: puts("pwd"); break;
-		case MKDIR: puts("mkdir"); break;
-		case TOUCH: puts("touch"); break;
-		case RM: puts("rm"); break;
-		case CP: puts("cp"); break;
-		case MV: puts("mv"); break;
-		case PRINT: puts("print"); break;
-		default: puts("INVALIDE");
-	} */
-}
-
-
-noeud *ls(noeud *n, instruction *instr) {
-	if(instr->nombre_arguments > 0) {
+static noeud *ls(noeud *n, instruction *instr) {
+	if(instr->nombre_arguments > 0)
 		exit_nombre_d_argument("ls", 0, instr->nombre_arguments);
-	}
 
 	flog("exécution de ls");
 	affiche_liste(n->fils);
 	return n;
 }
 
-noeud *cd(noeud *n, instruction *instr) {
-	if (instr->nombre_arguments > 1) {
+static noeud *cd(noeud *n, instruction *instr) {
+	if (instr->nombre_arguments > 1)
 		exit_nombre_d_argument("cd", 0, instr->nombre_arguments);
-	}
 
 	flog("exécution de cd");
-	if(instr->nombre_arguments == 0){
-		return n->racine;
-	}
+
+	if(instr->nombre_arguments == 0) return n->racine;
 
 	chemin *chem = generer_chemin(instr->arg1);
 	noeud *dst = aller_a(n, chem);
@@ -117,10 +113,9 @@ noeud *cd(noeud *n, instruction *instr) {
 	return dst;
 }
 
-noeud *pwd (noeud *n, instruction *instr) {
-	if (instr->nombre_arguments > 0) {
+static noeud *pwd (noeud *n, instruction *instr) {
+	if (instr->nombre_arguments > 0)
 		exit_nombre_d_argument("pwd", 0, instr->nombre_arguments);
-	}
 
 	flog("exécution de pwd");
 	afficher_chemin(n);
@@ -128,10 +123,9 @@ noeud *pwd (noeud *n, instruction *instr) {
 	return n;
 }
 
-noeud *mkdir(noeud *n, instruction *instr) {
-	if (instr->nombre_arguments != 1) {
+static noeud *mkdir(noeud *n, instruction *instr) {
+	if (instr->nombre_arguments != 1)
 		exit_nombre_d_argument("mkdir", 1, instr->nombre_arguments);
-	}
 
 	flogf("exécution de mkdir %s\n", instr->arg1);
 	liste_noeud *l = creer_liste();
@@ -140,10 +134,9 @@ noeud *mkdir(noeud *n, instruction *instr) {
 	return n;
 }
 
-noeud *touch(noeud *n, instruction *instr) {
-	if (instr->nombre_arguments != 1) {
+static noeud *touch(noeud *n, instruction *instr) {
+	if (instr->nombre_arguments != 1)
 		exit_nombre_d_argument("touch", 1, instr->nombre_arguments);
-	}
 
 	flogf("exécution de touch %s\n", instr->arg1);
 	creer_fichier(n, instr->arg1);
@@ -151,19 +144,17 @@ noeud *touch(noeud *n, instruction *instr) {
 	return n;
 }
 
-noeud *rm(noeud *n, instruction *instr) {
-	if (instr->nombre_arguments != 1) {
+static noeud *rm(noeud *n, instruction *instr) {
+	if (instr->nombre_arguments != 1)
 		exit_nombre_d_argument("rm", 1, instr->nombre_arguments);
-	}
 
 	flogf("exécution de rm %s\n", instr->arg1);
 
 	chemin *chem = generer_chemin(instr->arg1);
 	noeud *a_suppr = aller_a(n, chem);
 
-	if (a_suppr->est_dossier && est_parent(a_suppr, n)) {
+	if (a_suppr->est_dossier && est_parent(a_suppr, n))
 		exit_suppression_impossible(n->nom, a_suppr->nom);
-	}
 
 	supprimer_elt(a_suppr->pere->fils, a_suppr);
 	liberer_noeud(a_suppr);
@@ -172,10 +163,9 @@ noeud *rm(noeud *n, instruction *instr) {
 	return n;
 }
 
-noeud *cp(noeud *n, instruction *instr) {
-	if (instr->nombre_arguments != 2) {
+static noeud *cp(noeud *n, instruction *instr) {
+	if (instr->nombre_arguments != 2)
 		exit_nombre_d_argument("cp", 2, instr->nombre_arguments);
-	}
 
 	flogf("exécution de cp %s %s\n", instr->arg1, instr->arg2);
 
@@ -196,10 +186,9 @@ noeud *cp(noeud *n, instruction *instr) {
 	return n;
 }
 
-noeud *mv(noeud *n, instruction *instr) {
-	if (instr->nombre_arguments != 2) {
+static noeud *mv(noeud *n, instruction *instr) {
+	if (instr->nombre_arguments != 2)
 		exit_nombre_d_argument("mv", 2, instr->nombre_arguments);
-	}
 
 	flogf("exécution de mv %s %s\n", instr->arg1, instr->arg2);
 
@@ -225,10 +214,10 @@ noeud *mv(noeud *n, instruction *instr) {
 	return n;
 }
 
-noeud *print(noeud *n, instruction *instr) {
-	if (instr->nombre_arguments > 0) {
+static noeud *print(noeud *n, instruction *instr) {
+	if (instr->nombre_arguments > 0)
 		exit_nombre_d_argument("print", 0,instr->nombre_arguments);
-	}
+
 	print_noeud(n->racine);
 	return n;
 }

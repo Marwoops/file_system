@@ -24,16 +24,15 @@ extern noeud *creer_dossier(noeud*, char*, liste_noeud*);
 extern noeud *copier_noeud(noeud*, noeud*, char*);
 extern void afficher_chemin(noeud*);
 
-extern void liberer_noeud(noeud *);
+extern void liberer_noeud(noeud*);
 extern void ajouter_noeud(noeud*, noeud*);
 extern void supprimer_noeud(noeud*, chemin*, noeud*);
 extern void supprimer_noeud_par_nom(noeud*, chemin*, char*);
 
-extern bool est_dossier(noeud*);
-extern char **decoupe_chemin(char *, bool *, size_t *);
 extern char *sans_dernier_noeud(chemin*);
-extern noeud *aller_a(noeud *, chemin*);
+extern noeud *aller_a(noeud*, chemin*);
 extern bool est_parent(noeud*, noeud*);
 extern void print_noeud(noeud*);
-extern bool est_nom_valide(char *);
+extern bool est_nom_valide(char*);
+
 #endif

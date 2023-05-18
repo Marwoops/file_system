@@ -15,6 +15,8 @@ struct chemin {
 	char **noeuds;
 };
 
+static char **decoupe_chemin(char*, bool*, size_t*);
+
 char *dupliquer_chaine(char *s) {
 	assert(s != NULL);
 
@@ -133,7 +135,7 @@ void ajouter_noeud(noeud *pere, noeud *n) {
 	ajouter_elt(pere->fils, n);
 }
 
-char **decoupe_chemin(char *chemin, bool *est_absolu, size_t *taille) {
+static char **decoupe_chemin(char *chemin, bool *est_absolu, size_t *taille) {
     assert(chemin != NULL);
     assert(*chemin != '\0');
 
