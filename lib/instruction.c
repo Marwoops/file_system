@@ -206,14 +206,14 @@ noeud *mv(noeud *n, instruction *instr) {
 	chemin *chem_src = generer_chemin(instr->arg1);
 	chemin *chem_dst = generer_chemin(instr->arg2);
 	char *nom_dst = sans_dernier_noeud(chem_dst);
-	if(est_nom_valide(nom_dst))exit_nom_invalide(nom_dst);
+	if(!est_nom_valide(nom_dst)) exit_nom_invalide(nom_dst);
 
 	noeud *src = aller_a(n, chem_src);
 	noeud *dst = aller_a(n, chem_dst);
 
-	if (src->est_dossier && est_parent(src, dst)) {
+	if (src->est_dossier && est_parent(src, dst))
 		exit_deplacement_impossible(src->nom, dst->nom);
-	}
+
 	supprimer_elt(src->pere->fils, src);
 	src->pere = dst;
 	strcpy(src->nom, nom_dst);
