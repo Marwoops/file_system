@@ -1,46 +1,52 @@
-touch cramptos
-mkdir cramptinho
-cd cramptinho
+touch pointeur
+mkdir Mordor
+cd Mordor
 pwd
-mkdir caca
-touch prout
+mkdir CGT
+touch QuoicouBaaAAkkAA19
 ls
-cd caca
-touch mapesa
+cd CGT
+touch 1312
 ls
 cd ..
 cd ..
 ls
-cd cramptinho/caca
+cd Mordor/CGT
 cd ..
 cd ..
-cp cramptinho/caca cramptinho/pipi
+cp Mordor/CGT Mordor/lasquale
 ls
-cd cramptinho
+cd Mordor
 ls
-cd pipi
+cd lasquale
 ls
-cd ../caca
+cd ../CGT
 pwd
 ls
-cd uiaz"é"'"#" 
 cd ..
 ls
 cd ..
 ls
 pwd
-mv cramptinho copie
+mv Mordor doggo
 ls
-cd copie
+cd doggo
+
+
 ls
-cd caca
+cd CGT
+
+
 ls
-rm mapesa
+rm 1312
 ls
 cd ..
 ls
-rm caca
+rm CGT
 ls
 print
 cd /
 ls
+
+
+
