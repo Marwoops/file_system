@@ -21,3 +21,8 @@ Pour créer un fichier sortie `log` qui retrace toutes les actions du programme:
 ```bash
 ./treedir chemin/vers/instructions.txt --debug
 ```
+
+## Auteurs
+
+FRIEDMANN Eliot 
+AZIZI Marwan
