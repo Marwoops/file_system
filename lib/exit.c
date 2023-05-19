@@ -16,6 +16,12 @@ void exit_malloc() {
 	exit(MALLOC);
 }
 
+void exit_pas_de_nom() {
+	puts("Il faut préciser le nom de la destination");
+	procedure_fin();
+	exit(PAS_DE_NOM);
+}
+
 void exit_nombre_d_argument(char *cmd, int attendus, int actuels) {
   if (strcmp(cmd,"cd") == 0)
 		printf("\"%s\" attend au plus 1 argument. %d donné(s)\n", cmd, actuels);

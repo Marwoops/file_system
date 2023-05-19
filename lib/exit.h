@@ -4,10 +4,15 @@
 #include <stdio.h>
 
 
-enum exit {OK, MALLOC, NB_ARGUMENT, NOEUD_INEXISTANT, NOEUD_DEJA_EXISTANT, NOM_INVALIDE, COMMANDE_INVALIDE, PAS_UN_DOSSIER, SUPPRESSION_IMPOSSIBLE,
-COPIE_IMPOSSIBLE, DEPLACEMENT_IMPOSSIBLE};
+enum exit {OK, MALLOC,
+	PAS_DE_NOM, NB_ARGUMENT,
+	NOEUD_INEXISTANT, NOEUD_DEJA_EXISTANT,
+	NOM_INVALIDE, COMMANDE_INVALIDE,
+	PAS_UN_DOSSIER, SUPPRESSION_IMPOSSIBLE,
+	COPIE_IMPOSSIBLE, DEPLACEMENT_IMPOSSIBLE};
 
 extern void exit_malloc(void);
+extern void exit_pas_de_nom(void);
 extern void exit_nombre_d_argument(char*, int, int);
 extern void exit_noeud_null(char*);
 extern void exit_noeud_existant(char*);
