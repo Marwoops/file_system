@@ -9,7 +9,8 @@ enum exit {OK, MALLOC,
 	NOEUD_INEXISTANT, NOEUD_DEJA_EXISTANT,
 	NOM_INVALIDE, COMMANDE_INVALIDE,
 	PAS_UN_DOSSIER, SUPPRESSION_IMPOSSIBLE,
-	COPIE_IMPOSSIBLE, DEPLACEMENT_IMPOSSIBLE};
+	COPIE_IMPOSSIBLE, DEPLACEMENT_IMPOSSIBLE,
+	CHEMIN_MAL_FORME};
 
 extern void exit_malloc(void);
 extern void exit_pas_de_nom(void);
@@ -23,5 +24,6 @@ extern void exit_suppression_impossible(char*, char*);
 extern void exit_copie_impossible(char*, char*);
 extern void exit_deplacement_impossible(char*, char*);
 extern void exit_trop_d_arguments(char*);
+extern void exit_chemin_mal_forme(char*);
 
 #endif

@@ -89,3 +89,10 @@ void exit_trop_d_arguments(char *cmd) {
 	procedure_fin();
 	exit(NB_ARGUMENT);
 }
+
+void exit_chemin_mal_forme(char *s) {
+	printf("Le chemin %s est mal formé\n", s);
+	puts("un chemin ne peut pas terminer par un /, en dehors du chemin \"/\"");
+	procedure_fin();
+	exit(CHEMIN_MAL_FORME);
+}

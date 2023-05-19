@@ -151,16 +151,19 @@ static char **decoupe_chemin(char *chemin, bool *est_absolu, size_t *taille) {
         *est_absolu = false;
     }
 
-    size_t nb_noeuds = 1;
     size_t len = strlen(chemin);
-    for (size_t i = 0; i < len; ++i) {
+	if (*(chemin + len - 1) == '/')  exit_chemin_mal_forme(chemin);
+
+    size_t nb_noeuds = 1;
+
+    for (size_t i = 0; i < len; ++i)
         if (*(chemin + i) == '/') ++nb_noeuds;
-    }
 
     *taille = nb_noeuds;
 
-    char **chemin_decoupe = malloc((nb_noeuds+1) * sizeof(char*));
+    char **chemin_decoupe = malloc(nb_noeuds * sizeof(char*));
     *chemin_decoupe = strtok(chemin, "/");
+
     for (size_t i = 1; i < nb_noeuds; ++i)
         *(chemin_decoupe + i) = strtok(NULL, "/");
 
